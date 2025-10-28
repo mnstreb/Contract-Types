@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contract Type Risk vs Benefit Analysis</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            color: #1e293b;
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #475569;
+            margin-bottom: 30px;
+        }
+
+        .selectors {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .selector-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .selector-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .selector-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .selector-label {
+            font-weight: bold;
+            color: #1e293b;
+            margin-bottom: 12px;
+            font-size: 0.95em;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .metric-btn {
+            padding: 12px 16px;
+            border: none;
+            border-radius: 8px;
+            background: #f1f5f9;
+            color: #475569;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: left;
+            font-size: 0.9em;
+            font-weight: 600;
+        }
+
+        .metric-btn:hover {
+            background: #e2e8f0;
+        }
+
+        .metric-btn.active-x {
+            background: #3b82f6;
+            color: white;
+            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+        }
+
+        .metric-btn.active-y {
+            background: #f97316;
+            color: white;
+            box-shadow: 0 2px 4px rgba(249, 115, 22, 0.3);
+        }
+
+        .description-box {
+            background: #eff6ff;
+            border: 1px solid #bfdbfe;
+            border-left: 4px solid #3b82f6;
+            padding: 16px;
+            border-radius: 8px;
+            color: #1e293b;
+            font-size: 0.9em;
+        }
+
+        .chart-container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .chart-title {
+            text-align: center;
+            color: #1e293b;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 16px;
+        }
+
+        .legend-item {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            border-left: 4px solid;
+        }
+
+        .legend-item.tm { border-left-color: #3b82f6; }
+        .legend-item.tm-nte { border-left-color: #8b5cf6; }
+        .legend-item.gmp { border-left-color: #f59e0b; }
+        .legend-item.ffp { border-left-color: #ef4444; }
+
+        .legend-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .legend-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .legend-title {
+            font-weight: bold;
+            color: #1e293b;
+        }
+
+        .legend-desc {
+            font-size: 0.85em;
+            color: #64748b;
+        }
+
+        canvas {
+            max-height: 500px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Contract Type Risk vs Benefit Analysis</h1>
+        <p class="subtitle">Compare contractor and client perspectives across different metrics</p>
+
+        <div class="selectors">
+            <div class="selector-grid">
+                <div class="selector-group">
+                    <div class="selector-label">X-Axis (Risk/Exposure):</div>
+                    <div class="button-group" id="xButtons"></div>
+                </div>
+                <div class="selector-group">
+                    <div class="selector-label">Y-Axis (Benefit/Control):</div>
+                    <div class="button-group" id="yButtons"></div>
+                </div>
+            </div>
+            <div class="description-box">
+                <strong>X:</strong> <span id="xDesc"></span> | 
+                <strong>Y:</strong> <span id="yDesc"></span>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <div class="chart-title" id="chartTitle"></div>
+            <canvas id="scatterChart"></canvas>
+        </div>
+
+        <div class="legend-grid">
+            <div class="legend-item tm">
+                <div class="legend-header">
+                    <div class="legend-dot" style="background: #3b82f6;"></div>
+                    <div class="legend-title">T&M</div>
+                </div>
+                <div class="legend-desc">Time & Materials - Full cost pass-through</div>
+            </div>
+            <div class="legend-item tm-nte">
+                <div class="legend-header">
+                    <div class="legend-dot" style="background: #8b5cf6;"></div>
+                    <div class="legend-title">T&M W/NTE</div>
+                </div>
+                <div class="legend-desc">With spending cap limit</div>
+            </div>
+            <div class="legend-item gmp">
+                <div class="legend-header">
+                    <div class="legend-dot" style="background: #f59e0b;"></div>
+                    <div class="legend-title">GMP</div>
+                </div>
+                <div class="legend-desc">Guaranteed Maximum Price</div>
+            </div>
+            <div class="legend-item ffp">
+                <div class="legend-header">
+                    <div class="legend-dot" style="background: #ef4444;"></div>
+                    <div class="legend-title">FFP</div>
+                </div>
+                <div class="legend-desc">Firm Fixed Price - All risk to contractor</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const metrics = {
+            costRisk: {
+                label: 'Cost Risk for Contractor',
+                description: 'Higher = More financial risk for contractor',
+                type: 'x'
+            },
+            scheduleRisk: {
+                label: 'Schedule Risk for Contractor',
+                description: 'Higher = More schedule performance risk',
+                type: 'x'
+            },
+            clientCostExposure: {
+                label: 'Client Cost Exposure',
+                description: 'Higher = More cost uncertainty for client',
+                type: 'x'
+            },
+            changeOrderComplexity: {
+                label: 'Change Order Complexity',
+                description: 'Higher = More difficult to manage changes',
+                type: 'x'
+            },
+            costBenefit: {
+                label: 'Contractor Profit Potential',
+                description: 'Higher = Greater profit opportunity',
+                type: 'y'
+            },
+            scheduleBenefit: {
+                label: 'Schedule Flexibility',
+                description: 'Higher = More flexibility in schedule',
+                type: 'y'
+            },
+            clientCostControl: {
+                label: 'Client Cost Control',
+                description: 'Higher = Better cost predictability for client',
+                type: 'y'
+            },
+            clientScheduleEnforcement: {
+                label: 'Client Schedule Enforcement',
+                description: 'Higher = Better ability to enforce schedule',
+                type: 'y'
+            }
+        };
+
+        const contractData = {
+            costRisk_costBenefit: [
+                { name: 'T&M', x: 2, y: 4, color: '#3b82f6' },
+                { name: 'T&M W/NTE', x: 4, y: 5, color: '#8b5cf6' },
+                { name: 'GMP', x: 6, y: 7, color: '#f59e0b' },
+                { name: 'FFP', x: 9, y: 8, color: '#ef4444' }
+            ],
+            scheduleRisk_scheduleBenefit: [
+                { name: 'T&M', x: 2, y: 8, color: '#3b82f6' },
+                { name: 'T&M W/NTE', x: 4, y: 6, color: '#8b5cf6' },
+                { name: 'GMP', x: 7, y: 4, color: '#f59e0b' },
+                { name: 'FFP', x: 9, y: 2, color: '#ef4444' }
+            ],
+            clientCostExposure_clientCostControl: [
+                { name: 'T&M', x: 9, y: 2, color: '#3b82f6' },
+                { name: 'T&M W/NTE', x: 6, y: 5, color: '#8b5cf6' },
+                { name: 'GMP', x: 4, y: 7, color: '#f59e0b' },
+                { name: 'FFP', x: 1, y: 9, color: '#ef4444' }
+            ],
+            changeOrderComplexity_scheduleBenefit: [
+                { name: 'T&M', x: 1, y: 8, color: '#3b82f6' },
+                { name: 'T&M W/NTE', x: 3, y: 6, color: '#8b5cf6' },
+                { name: 'GMP', x: 5, y: 4, color: '#f59e0b' },
+                { name: 'FFP', x: 8, y: 2, color: '#ef4444' }
+            ],
+            scheduleRisk_clientScheduleEnforcement: [
+                { name: 'T&M', x: 2, y: 2, color: '#3b82f6' },
+                { name: 'T&M W/NTE', x: 4, y: 4, color: '#8b5cf6' },
+                { name: 'GMP', x: 7, y: 7, color: '#f59e0b' },
+                { name: 'FFP', x: 9, y: 9, color: '#ef4444' }
+            ],
+            costRisk_clientCostControl: [
+                { name: 'T&M', x: 2, y: 2, color: '#3b82f6' },
+                { name: 'T&M W/NTE', x: 4, y: 5, color: '#8b5cf6' },
+                { name: 'GMP', x: 6, y: 7, color: '#f59e0b' },
+                { name: 'FFP', x: 9, y: 9, color: '#ef4444' }
+            ]
+        };
+
+        let currentXMetric = 'costRisk';
+        let currentYMetric = 'costBenefit';
+        let chart;
+
+        function createButtons() {
+            const xButtonsContainer = document.getElementById('xButtons');
+            const yButtonsContainer = document.getElementById('yButtons');
+
+            Object.entries(metrics).forEach(([key, value]) => {
+                const button = document.createElement('button');
+                button.className = 'metric-btn';
+                button.textContent = value.label;
+                
+                if (value.type === 'x') {
+                    button.onclick = () => {
+                        currentXMetric = key;
+                        updateChart();
+                        updateButtonStates();
+                    };
+                    xButtonsContainer.appendChild(button);
+                } else {
+                    button.onclick = () => {
+                        currentYMetric = key;
+                        updateChart();
+                        updateButtonStates();
+                    };
+                    yButtonsContainer.appendChild(button);
+                }
+            });
+
+            updateButtonStates();
+        }
+
+        function updateButtonStates() {
+            document.querySelectorAll('.metric-btn').forEach(btn => {
+                btn.classList.remove('active-x', 'active-y');
+            });
+
+            const xButtons = document.getElementById('xButtons').querySelectorAll('.metric-btn');
+            const yButtons = document.getElementById('yButtons').querySelectorAll('.metric-btn');
+
+            const xIndex = Object.keys(metrics).filter(k => metrics[k].type === 'x').indexOf(currentXMetric);
+            const yIndex = Object.keys(metrics).filter(k => metrics[k].type === 'y').indexOf(currentYMetric);
+
+            if (xButtons[xIndex]) xButtons[xIndex].classList.add('active-x');
+            if (yButtons[yIndex]) yButtons[yIndex].classList.add('active-y');
+
+            document.getElementById('xDesc').textContent = metrics[currentXMetric].description;
+            document.getElementById('yDesc').textContent = metrics[currentYMetric].description;
+        }
+
+        function updateChart() {
+            const key = `${currentXMetric}_${currentYMetric}`;
+            const data = contractData[key] || contractData.costRisk_costBenefit;
+
+            document.getElementById('chartTitle').textContent = 
+                `${metrics[currentXMetric].label} vs ${metrics[currentYMetric].label}`;
+
+            const chartData = {
+                datasets: data.map(point => ({
+                    label: point.name,
+                    data: [{ x: point.x, y: point.y }],
+                    backgroundColor: point.color,
+                    borderColor: '#ffffff',
+                    borderWidth: 2,
+                    pointRadius: 8,
+                    pointHoverRadius: 10
+                }))
+            };
+
+            const config = {
+                type: 'scatter',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(255, 255, 255, 0.95)',
+                            titleColor: '#1e293b',
+                            bodyColor: '#475569',
+                            borderColor: '#cbd5e1',
+                            borderWidth: 2,
+                            padding: 12,
+                            displayColors: false,
+                            callbacks: {
+                                title: (context) => context[0].dataset.label,
+                                label: (context) => [
+                                    `${metrics[currentXMetric].label}: ${context.parsed.x}`,
+                                    `${metrics[currentYMetric].label}: ${context.parsed.y}`
+                                ]
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            min: 0,
+                            max: 10,
+                            ticks: {
+                                stepSize: 2,
+                                color: '#475569'
+                            },
+                            title: {
+                                display: true,
+                                text: metrics[currentXMetric].label + ' (Higher = More Risk)',
+                                color: '#1e293b',
+                                font: {
+                                    weight: 'bold',
+                                    size: 13
+                                }
+                            },
+                            grid: {
+                                color: '#e0e0e0'
+                            }
+                        },
+                        y: {
+                            min: 0,
+                            max: 10,
+                            ticks: {
+                                stepSize: 2,
+                                color: '#475569'
+                            },
+                            title: {
+                                display: true,
+                                text: metrics[currentYMetric].label + ' (Higher = More Benefit)',
+                                color: '#1e293b',
+                                font: {
+                                    weight: 'bold',
+                                    size: 13
+                                }
+                            },
+                            grid: {
+                                color: '#e0e0e0'
+                            }
+                        }
+                    }
+                }
+            };
+
+            if (chart) {
+                chart.destroy();
+            }
+
+            const ctx = document.getElementById('scatterChart').getContext('2d');
+            chart = new Chart(ctx, config);
+        }
+
+        createButtons();
+        updateChart();
+    </script>
+</body>
+</html>

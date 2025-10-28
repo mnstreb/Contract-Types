@@ -241,193 +241,244 @@
             font-size: 0.9em;
         }
 
-        /* Decision Tree */
-        .decision-tree {
+        /* Interactive Quiz */
+        .quiz-container {
             background: white;
             padding: 40px;
             border-radius: 4px;
             border: 1px solid #dee2e6;
         }
 
-        .decision-level {
-            margin-bottom: 50px;
-        }
-
-        .decision-level:last-child {
-            margin-bottom: 0;
-        }
-
-        .level-title {
-            background: #1a252f;
-            color: white;
-            padding: 12px 20px;
+        .quiz-progress {
+            background: #f8f9fa;
+            padding: 20px;
             border-radius: 3px;
-            font-size: 1.1em;
-            font-weight: 600;
-            display: inline-block;
-            margin-bottom: 20px;
-            letter-spacing: 0.5px;
+            margin-bottom: 30px;
+            border-left: 4px solid #0066cc;
         }
 
-        .level-question {
-            font-size: 1.15em;
+        .progress-bar-container {
+            background: #e5e7eb;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 10px;
+        }
+
+        .progress-bar {
+            background: #0066cc;
+            height: 100%;
+            transition: width 0.3s ease;
+        }
+
+        .progress-text {
+            font-size: 0.9em;
+            color: #5a6c7d;
             font-weight: 600;
+        }
+
+        .question-container {
+            min-height: 400px;
+        }
+
+        .question-title {
+            font-size: 1.4em;
             color: #1a252f;
-            margin-bottom: 24px;
+            margin-bottom: 10px;
+            font-weight: 600;
         }
 
-        .options-grid {
+        .question-subtitle {
+            color: #5a6c7d;
+            margin-bottom: 30px;
+            font-size: 1.05em;
+        }
+
+        .answer-options {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
+            gap: 16px;
         }
 
-        .option-card {
+        .answer-option {
             background: #f8f9fa;
             padding: 24px;
-            border-radius: 3px;
-            border-left: 4px solid;
-            border-top: 1px solid #dee2e6;
-            border-right: 1px solid #dee2e6;
-            border-bottom: 1px solid #dee2e6;
+            border-radius: 4px;
+            border: 2px solid #dee2e6;
+            cursor: pointer;
+            transition: all 0.2s;
         }
 
-        .option-card.tm { border-left-color: #0066cc; }
-        .option-card.tm-nte { border-left-color: #6366f1; }
-        .option-card.gmp { border-left-color: #f59e0b; }
-        .option-card.ffp { border-left-color: #dc2626; }
+        .answer-option:hover {
+            border-color: #0066cc;
+            background: #e8f4f8;
+        }
 
-        .option-title {
+        .answer-option.selected {
+            border-color: #0066cc;
+            background: #e8f4f8;
+            border-width: 3px;
+        }
+
+        .answer-title {
             font-weight: 600;
-            font-size: 1.05em;
             color: #1a252f;
-            margin-bottom: 12px;
+            margin-bottom: 8px;
+            font-size: 1.1em;
         }
 
-        .option-description {
+        .answer-description {
             color: #5a6c7d;
             font-size: 0.95em;
             line-height: 1.6;
         }
 
-        /* Case Studies */
-        .cases-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
-            gap: 30px;
+        .quiz-buttons {
+            display: flex;
+            gap: 12px;
+            margin-top: 30px;
+            justify-content: space-between;
         }
 
-        .case-card {
-            background: white;
+        .quiz-btn {
+            padding: 12px 28px;
+            border: none;
             border-radius: 3px;
-            border: 1px solid #dee2e6;
-            overflow: hidden;
-        }
-
-        .case-header {
-            padding: 24px;
-            color: white;
-            border-bottom: 3px solid rgba(255,255,255,0.3);
-        }
-
-        .case-header.tm { background: #0066cc; }
-        .case-header.ffp { background: #dc2626; }
-        .case-header.gmp { background: #f59e0b; }
-        .case-header.tm-nte { background: #6366f1; }
-
-        .contract-label {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            padding: 6px 14px;
-            border-radius: 3px;
-            font-size: 0.85em;
-            font-weight: 600;
-            margin-bottom: 12px;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-        }
-
-        .case-title {
-            font-size: 1.5em;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .case-subtitle {
             font-size: 0.95em;
-            opacity: 0.9;
-        }
-
-        .case-body {
-            padding: 28px;
-        }
-
-        .case-section {
-            margin-bottom: 24px;
-        }
-
-        .case-section:last-child {
-            margin-bottom: 0;
-        }
-
-        .section-title {
+            cursor: pointer;
             font-weight: 600;
+            letter-spacing: 0.3px;
+            transition: all 0.2s;
+        }
+
+        .quiz-btn.primary {
+            background: #0066cc;
+            color: white;
+        }
+
+        .quiz-btn.primary:hover {
+            background: #0052a3;
+        }
+
+        .quiz-btn.primary:disabled {
+            background: #cbd5e0;
+            cursor: not-allowed;
+        }
+
+        .quiz-btn.secondary {
+            background: #e5e7eb;
+            color: #2c3e50;
+        }
+
+        .quiz-btn.secondary:hover {
+            background: #cbd5e0;
+        }
+
+        .results-container {
+            min-height: 400px;
+        }
+
+        .recommended-contract {
+            background: #e8f4f8;
+            border-left: 4px solid #0066cc;
+            padding: 30px;
+            border-radius: 3px;
+            margin-bottom: 30px;
+        }
+
+        .recommended-contract h3 {
             color: #1a252f;
-            margin-bottom: 10px;
+            font-size: 1.8em;
+            margin-bottom: 12px;
+            font-weight: 600;
+        }
+
+        .recommended-contract .contract-name {
+            font-size: 2.2em;
+            color: #0066cc;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .recommendation-reason {
+            color: #2c3e50;
+            line-height: 1.7;
             font-size: 1.05em;
         }
 
-        .section-content {
-            color: #5a6c7d;
-            line-height: 1.7;
-        }
-
-        .metrics-display {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 16px;
-        }
-
-        .metric-box {
+        .your-answers {
             background: #f8f9fa;
+            padding: 24px;
+            border-radius: 3px;
+            margin-bottom: 24px;
+        }
+
+        .your-answers h4 {
+            color: #1a252f;
+            margin-bottom: 16px;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .answer-summary {
+            display: grid;
+            gap: 12px;
+        }
+
+        .answer-item {
             padding: 12px;
+            background: white;
             border-radius: 3px;
             border-left: 3px solid #0066cc;
         }
 
-        .metric-label {
-            font-size: 0.85em;
-            color: #5a6c7d;
-            margin-bottom: 4px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        .metric-value {
+        .answer-label {
             font-weight: 600;
             color: #1a252f;
-            font-size: 1.05em;
+            font-size: 0.9em;
+            margin-bottom: 4px;
         }
 
-        .outcome-box {
-            background: #d1fae5;
-            border-left: 4px solid #059669;
-            padding: 18px;
-            border-radius: 3px;
-            margin-top: 20px;
-        }
-
-        .outcome-title {
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #065f46;
-        }
-
-        .outcome-content {
+        .answer-value {
+            color: #5a6c7d;
             font-size: 0.95em;
-            line-height: 1.6;
-            color: #047857;
+        }
+
+        .alternative-contracts {
+            background: white;
+            padding: 24px;
+            border-radius: 3px;
+            border: 1px solid #dee2e6;
+        }
+
+        .alternative-contracts h4 {
+            color: #1a252f;
+            margin-bottom: 16px;
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .alternative-item {
+            padding: 16px;
+            background: #f8f9fa;
+            border-radius: 3px;
+            margin-bottom: 12px;
+            border-left: 3px solid #6366f1;
+        }
+
+        .alternative-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .alternative-name {
+            font-weight: 600;
+            color: #1a252f;
+            margin-bottom: 6px;
+        }
+
+        .alternative-reason {
+            color: #5a6c7d;
+            font-size: 0.9em;
+            line-height: 1.5;
         }
 
         /* Cheat Sheet */
@@ -589,8 +640,6 @@
                 font-size: 1.6em;
             }
 
-            .cases-grid,
-            .options-grid,
             .red-flag-grid {
                 grid-template-columns: 1fr;
             }
@@ -616,8 +665,7 @@
                 <li><a href="#overview">Overview</a></li>
                 <li><a href="#scatter">Risk Analysis</a></li>
                 <li><a href="#bars">Comparisons</a></li>
-                <li><a href="#decision">Decision Framework</a></li>
-                <li><a href="#cases">Case Studies</a></li>
+                <li><a href="#selector">Contract Selector</a></li>
                 <li><a href="#reference">Reference</a></li>
                 <li><a href="#considerations">Key Considerations</a></li>
             </ul>
@@ -695,353 +743,26 @@
         </div>
     </section>
 
-    <!-- Decision Tree -->
-    <section id="decision">
-        <h2>Contract Selection Decision Framework</h2>
-        <p class="subtitle">Systematic approach to contract type determination</p>
+    <!-- Interactive Contract Selector -->
+    <section id="selector">
+        <h2>Contract Selection Tool</h2>
+        <p class="subtitle">Answer four questions to determine the optimal contract type for your project</p>
 
-        <div class="decision-tree">
-            <div class="decision-level">
-                <div class="level-title">PHASE 1: PROJECT READINESS ASSESSMENT</div>
-                <div class="level-question">Design Completion and Scope Definition Status</div>
-                <div class="options-grid">
-                    <div class="option-card tm">
-                        <div class="option-title">0-30% Design Development</div>
-                        <div class="option-description">
-                            Conceptual phase with preliminary scope definition. Requirements continue to evolve during execution.
-                            <br><br><strong>Recommended Approach: Time & Materials</strong>
-                        </div>
-                    </div>
-                    <div class="option-card tm-nte">
-                        <div class="option-title">30-60% Design Development</div>
-                        <div class="option-description">
-                            Schematic design phase with major systems identified. Sufficient definition for cost envelope estimation.
-                            <br><br><strong>Recommended Approach: T&M with NTE or GMP</strong>
-                        </div>
-                    </div>
-                    <div class="option-card gmp">
-                        <div class="option-title">60-90% Design Development</div>
-                        <div class="option-description">
-                            Design development phase with primary decisions finalized. Minor details under refinement.
-                            <br><br><strong>Recommended Approach: Guaranteed Maximum Price</strong>
-                        </div>
-                    </div>
-                    <div class="option-card ffp">
-                        <div class="option-title">90-100% Design Complete</div>
-                        <div class="option-description">
-                            Construction documents complete with full specifications. Scope fully defined and documented.
-                            <br><br><strong>Recommended Approach: Firm Fixed Price</strong>
-                        </div>
-                    </div>
+        <div class="quiz-container">
+            <div class="quiz-progress">
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progressBar"></div>
                 </div>
+                <div class="progress-text" id="progressText">Question 1 of 4</div>
             </div>
 
-            <div class="decision-level">
-                <div class="level-title">PHASE 2: BUDGET AND FINANCIAL CONSTRAINTS</div>
-                <div class="level-question">Budget Flexibility and Funding Requirements</div>
-                <div class="options-grid">
-                    <div class="option-card ffp">
-                        <div class="option-title">Fixed Budget Requirement</div>
-                        <div class="option-description">
-                            Board-approved allocation with no contingency. Financing or regulatory requirements mandate cost certainty.
-                            <br><br><strong>Suitable Approaches: FFP or GMP</strong>
-                        </div>
-                    </div>
-                    <div class="option-card gmp">
-                        <div class="option-title">Budget with Contingency Reserve</div>
-                        <div class="option-description">
-                            Approved budget with 10-20% contingency allocation available for scope adjustments.
-                            <br><br><strong>Suitable Approaches: GMP or T&M with NTE</strong>
-                        </div>
-                    </div>
-                    <div class="option-card tm">
-                        <div class="option-title">Flexible Budget Authorization</div>
-                        <div class="option-description">
-                            Budget can be adjusted based on actual scope refinement and project requirements.
-                            <br><br><strong>Suitable Approach: Time & Materials</strong>
-                        </div>
-                    </div>
-                </div>
+            <div class="question-container" id="questionContainer">
+                <!-- Questions will be inserted here by JavaScript -->
             </div>
 
-            <div class="decision-level">
-                <div class="level-title">PHASE 3: ORGANIZATIONAL CAPABILITY ASSESSMENT</div>
-                <div class="level-question">Internal Project Management Resource Availability</div>
-                <div class="options-grid">
-                    <div class="option-card tm">
-                        <div class="option-title">Comprehensive PM Capability</div>
-                        <div class="option-description">
-                            Experienced construction management team available for daily oversight and cost monitoring.
-                            <br><br><strong>T&M approaches are viable with proper oversight</strong>
-                        </div>
-                    </div>
-                    <div class="option-card gmp">
-                        <div class="option-title">Moderate PM Capability</div>
-                        <div class="option-description">
-                            Capable of weekly progress reviews, change order management, and milestone verification.
-                            <br><br><strong>GMP provides optimal balance</strong>
-                        </div>
-                    </div>
-                    <div class="option-card ffp">
-                        <div class="option-title">Limited PM Resources</div>
-                        <div class="option-description">
-                            Contractor must manage day-to-day operations. Internal team focuses on milestone reviews only.
-                            <br><br><strong>FFP minimizes oversight requirements</strong>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="decision-level" style="margin-bottom: 0;">
-                <div class="level-title">PHASE 4: SCOPE VOLATILITY ANALYSIS</div>
-                <div class="level-question">Anticipated Scope Change Probability</div>
-                <div class="options-grid">
-                    <div class="option-card tm">
-                        <div class="option-title">High Change Probability</div>
-                        <div class="option-description">
-                            Renovation projects, phased design, or significant unknowns. Discovery expected during execution.
-                            <br><br><strong>T&M provides necessary flexibility</strong>
-                        </div>
-                    </div>
-                    <div class="option-card gmp">
-                        <div class="option-title">Moderate Change Expectation</div>
-                        <div class="option-description">
-                            Minor refinements anticipated. Core scope stable with potential for limited adjustments.
-                            <br><br><strong>GMP or T&M with NTE appropriate</strong>
-                        </div>
-                    </div>
-                    <div class="option-card ffp">
-                        <div class="option-title">Stable Scope Definition</div>
-                        <div class="option-description">
-                            Complete design with minimal anticipated changes. Requirements thoroughly documented and validated.
-                            <br><br><strong>FFP is appropriate structure</strong>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Case Studies -->
-    <section id="cases">
-        <h2>Implementation Case Studies</h2>
-        <p class="subtitle">Analysis of contract type applications in various project scenarios</p>
-
-        <div class="cases-grid">
-            <!-- T&M Case -->
-            <div class="case-card">
-                <div class="case-header tm">
-                    <div class="contract-label">Time & Materials</div>
-                    <div class="case-title">Biotech Laboratory Renovation</div>
-                    <div class="case-subtitle">Research Facility | Existing Building</div>
-                </div>
-                <div class="case-body">
-                    <div class="case-section">
-                        <div class="section-title">Project Context</div>
-                        <div class="section-content">
-                            15,000 SF laboratory space in 30-year-old facility. Inadequate documentation of existing MEP systems. Site conditions unknown. User requirements under development.
-                        </div>
-                        <div class="metrics-display">
-                            <div class="metric-box">
-                                <div class="metric-label">Design Status</div>
-                                <div class="metric-value">25% Complete</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-label">Project Value</div>
-                                <div class="metric-value">$2.3M Budget</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-label">Schedule Constraint</div>
-                                <div class="metric-value">Moderate</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-label">PM Resources</div>
-                                <div class="metric-value">Comprehensive</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-section">
-                        <div class="section-title">Contract Type Rationale</div>
-                        <div class="section-content">
-                            <ul>
-                                <li>Flexibility required for discovery of asbestos, outdated electrical systems, and structural deficiencies</li>
-                                <li>Phased design approach enabled concurrent demolition and design refinement</li>
-                                <li>User stakeholder input integrated throughout execution without formal change orders</li>
-                                <li>Established relationship and trust with contractor supported cost transparency</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="outcome-box">
-                        <div class="outcome-title">Project Outcome</div>
-                        <div class="outcome-content">
-                            Completed in 8 months with final cost of $2.4M (4% variance from initial estimate). Avoided 6-month delay that would have resulted from FFP procurement process. Final deliverable precisely matched end-user requirements developed during construction.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- FFP Case -->
-            <div class="case-card">
-                <div class="case-header ffp">
-                    <div class="contract-label">Firm Fixed Price</div>
-                    <div class="case-title">Corporate Office Build-Out</div>
-                    <div class="case-subtitle">Technology Company | Class A Office Space</div>
-                </div>
-                <div class="case-body">
-                    <div class="case-section">
-                        <div class="section-title">Project Context</div>
-                        <div class="section-content">
-                            50,000 SF lease space with complete architectural design. Standard commercial finishes with clear specifications. CFO required fixed cost for board approval and lease guarantee commitments.
-                        </div>
-                        <div class="metrics-display">
-                            <div class="metric-box">
-                                <div class="metric-label">Design Status</div>
-                                <div class="metric-value">100% Complete</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-label">Project Value</div>
-                                <div class="metric-value">$3.8M Fixed</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-label">Budget Flexibility</div>
-                                <div class="metric-value">None</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-label">PM Resources</div>
-                                <div class="metric-value">Limited</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-section">
-                        <div class="section-title">Contract Type Rationale</div>
-                        <div class="section-content">
-                            <ul>
-                                <li>Complete design documentation eliminated scope ambiguity and enabled accurate contractor pricing</li>
-                                <li>Competitive procurement with five qualified bidders resulted in 12% cost reduction versus budget</li>
-                                <li>Fixed cost provided necessary certainty for corporate lease commitment and financial planning</li>
-                                <li>Limited internal PM resources appropriate given contractor assumption of day-to-day management</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="outcome-box">
-                        <div class="outcome-title">Project Outcome</div>
-                        <div class="outcome-content">
-                            Delivered on schedule and on budget at $3.8M contract value. Two minor owner-initiated change orders totaling $85K. Contractor achieved satisfactory profit margin. Optimal outcome for well-defined scope with appropriate contract structure.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- GMP Case -->
-            <div class="case-card">
-                <div class="case-header gmp">
-                    <div class="contract-label">Guaranteed Maximum Price</div>
-                    <div class="case-title">Healthcare Facility Expansion</div>
-                    <div class="case-subtitle">Regional Hospital | New Surgical Wing</div>
-                </div>
-                <div class="case-body">
-                    <div class="case-section">
-                        <div class="section-title">Project Context</div>
-                        <div class="section-content">
-                            40,000 SF surgical wing addition to operational hospital. Equipment procurement finalization required during construction. Board of Directors mandated maximum price guarantee for financing while maintaining opportunity to benefit from cost efficiencies.
-                        </div>
-                        <div class="metrics-display">
-                            <div class="metric-box">
-                                <div class="metric-label">Design Status</div>
-                                <div class="metric-value">65% Complete</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-label">GMP Value</div>
-                                <div class="metric-value">$28M Maximum</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-label">Duration</div>
-                                <div class="metric-value">18 Months</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-label">Savings Split</div>
-                                <div class="metric-value">50/50</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-section">
-                        <div class="section-title">Contract Type Rationale</div>
-                        <div class="section-content">
-                            <ul>
-                                <li>Maximum price guarantee satisfied financing institution requirements and board fiduciary responsibilities</li>
-                                <li>50/50 savings distribution aligned contractor and owner incentives toward cost efficiency</li>
-                                <li>Structured collaboration through weekly value engineering sessions generated innovative cost solutions</li>
-                                <li>Fast-track delivery enabled site work initiation during final interior design refinement</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="outcome-box">
-                        <div class="outcome-title">Project Outcome</div>
-                        <div class="outcome-content">
-                            Final cost of $26.8M representing $1.2M savings below GMP. Owner realized $600K cost savings, contractor earned $600K performance incentive above base fee. Delivered 2 months ahead of schedule. Partnership approach led to selection of same structure for subsequent expansion phases.
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- T&M W/NTE Case -->
-            <div class="case-card">
-                <div class="case-header tm-nte">
-                    <div class="contract-label">T&M with Not-To-Exceed</div>
-                    <div class="case-title">Multi-Site Retail Renovation</div>
-                    <div class="case-subtitle">National Retailer | 15 Locations</div>
-                </div>
-                <div class="case-body">
-                    <div class="case-section">
-                        <div class="section-title">Project Context</div>
-                        <div class="section-content">
-                            Simultaneous renovation of 15 retail locations. Similar scope with site-specific variations in size, existing conditions, and local code requirements. Procurement efficiency and budget control both required.
-                        </div>
-                        <div class="metrics-display">
-                            <div class="metric-box">
-                                <div class="metric-label">Design Per Site</div>
-                                <div class="metric-value">40-60% Range</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-label">NTE Per Site</div>
-                                <div class="metric-value">$180K Maximum</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-label">Schedule</div>
-                                <div class="metric-value">6 Months Total</div>
-                            </div>
-                            <div class="metric-box">
-                                <div class="metric-label">Total Budget</div>
-                                <div class="metric-value">$2.7M Cap</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="case-section">
-                        <div class="section-title">Contract Type Rationale</div>
-                        <div class="section-content">
-                            <ul>
-                                <li>Immediate mobilization without site-specific detailed procurement for each location</li>
-                                <li>Individual site caps provided budget protection while maintaining scope flexibility</li>
-                                <li>Adaptive approach enabled scope adjustments based on site-specific conditions</li>
-                                <li>Process optimization across sites as contractor team developed efficiency improvements</li>
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="outcome-box">
-                        <div class="outcome-title">Project Outcome</div>
-                        <div class="outcome-content">
-                            14 of 15 locations completed below NTE with average cost of $165K per site. One location reached cap due to required HVAC system replacement. Total expenditure of $2.48M versus $2.7M authorized budget. Program completed in 5.5 months. Contractor maintained consistent work pipeline, owner achieved speed and cost objectives.
-                        </div>
-                    </div>
-                </div>
+            <div class="quiz-buttons">
+                <button class="quiz-btn secondary" id="backBtn" style="display: none;">Back</button>
+                <button class="quiz-btn primary" id="nextBtn" disabled>Next</button>
             </div>
         </div>
     </section>
@@ -1236,6 +957,308 @@
     </section>
 
     <script>
+        // ============================================
+        // INTERACTIVE QUIZ
+        // ============================================
+
+        const quizQuestions = [
+            {
+                id: 1,
+                title: "Phase 1: Design Completion Status",
+                subtitle: "What is the current level of design completion for your project?",
+                options: [
+                    {
+                        id: "design_0_30",
+                        title: "0-30% Design Complete",
+                        description: "Conceptual phase with preliminary scope definition. Requirements continue to evolve during execution.",
+                        scores: { tm: 4, tmnte: 2, gmp: 0, ffp: 0 }
+                    },
+                    {
+                        id: "design_30_60",
+                        title: "30-60% Design Complete",
+                        description: "Schematic design phase with major systems identified. Sufficient definition for cost envelope estimation.",
+                        scores: { tm: 2, tmnte: 4, gmp: 3, ffp: 0 }
+                    },
+                    {
+                        id: "design_60_90",
+                        title: "60-90% Design Complete",
+                        description: "Design development phase with primary decisions finalized. Minor details under refinement.",
+                        scores: { tm: 0, tmnte: 2, gmp: 4, ffp: 2 }
+                    },
+                    {
+                        id: "design_90_100",
+                        title: "90-100% Design Complete",
+                        description: "Construction documents complete with full specifications. Scope fully defined and documented.",
+                        scores: { tm: 0, tmnte: 0, gmp: 2, ffp: 4 }
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Phase 2: Budget Flexibility",
+                subtitle: "What is your budget authorization and flexibility?",
+                options: [
+                    {
+                        id: "budget_fixed",
+                        title: "Fixed Budget Requirement",
+                        description: "Board-approved allocation with no contingency. Financing or regulatory requirements mandate cost certainty.",
+                        scores: { tm: 0, tmnte: 1, gmp: 3, ffp: 4 }
+                    },
+                    {
+                        id: "budget_contingency",
+                        title: "Budget with Contingency Reserve",
+                        description: "Approved budget with 10-20% contingency allocation available for scope adjustments.",
+                        scores: { tm: 1, tmnte: 3, gmp: 4, ffp: 2 }
+                    },
+                    {
+                        id: "budget_flexible",
+                        title: "Flexible Budget Authorization",
+                        description: "Budget can be adjusted based on actual scope refinement and project requirements.",
+                        scores: { tm: 4, tmnte: 3, gmp: 2, ffp: 0 }
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Phase 3: Project Management Capability",
+                subtitle: "What level of internal PM resources do you have available?",
+                options: [
+                    {
+                        id: "pm_comprehensive",
+                        title: "Comprehensive PM Capability",
+                        description: "Experienced construction management team available for daily oversight and cost monitoring.",
+                        scores: { tm: 4, tmnte: 3, gmp: 2, ffp: 1 }
+                    },
+                    {
+                        id: "pm_moderate",
+                        title: "Moderate PM Capability",
+                        description: "Capable of weekly progress reviews, change order management, and milestone verification.",
+                        scores: { tm: 1, tmnte: 3, gmp: 4, ffp: 2 }
+                    },
+                    {
+                        id: "pm_limited",
+                        title: "Limited PM Resources",
+                        description: "Contractor must manage day-to-day operations. Internal team focuses on milestone reviews only.",
+                        scores: { tm: 0, tmnte: 1, gmp: 2, ffp: 4 }
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Phase 4: Scope Change Probability",
+                subtitle: "What is the likelihood of scope changes during execution?",
+                options: [
+                    {
+                        id: "change_high",
+                        title: "High Change Probability",
+                        description: "Renovation projects, phased design, or significant unknowns. Discovery expected during execution.",
+                        scores: { tm: 4, tmnte: 3, gmp: 2, ffp: 0 }
+                    },
+                    {
+                        id: "change_moderate",
+                        title: "Moderate Change Expectation",
+                        description: "Minor refinements anticipated. Core scope stable with potential for limited adjustments.",
+                        scores: { tm: 2, tmnte: 3, gmp: 4, ffp: 1 }
+                    },
+                    {
+                        id: "change_low",
+                        title: "Stable Scope Definition",
+                        description: "Complete design with minimal anticipated changes. Requirements thoroughly documented and validated.",
+                        scores: { tm: 0, tmnte: 1, gmp: 2, ffp: 4 }
+                    }
+                ]
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = {};
+        let scores = { tm: 0, tmnte: 0, gmp: 0, ffp: 0 };
+
+        function renderQuestion() {
+            const question = quizQuestions[currentQuestion];
+            const container = document.getElementById('questionContainer');
+            
+            let html = `
+                <div class="question-title">${question.title}</div>
+                <div class="question-subtitle">${question.subtitle}</div>
+                <div class="answer-options">
+            `;
+
+            question.options.forEach(option => {
+                const selected = answers[question.id] === option.id ? 'selected' : '';
+                html += `
+                    <div class="answer-option ${selected}" onclick="selectAnswer(${question.id}, '${option.id}')">
+                        <div class="answer-title">${option.title}</div>
+                        <div class="answer-description">${option.description}</div>
+                    </div>
+                `;
+            });
+
+            html += '</div>';
+            container.innerHTML = html;
+
+            // Update progress
+            const progress = ((currentQuestion + 1) / quizQuestions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `Question ${currentQuestion + 1} of ${quizQuestions.length}`;
+
+            // Update buttons
+            document.getElementById('backBtn').style.display = currentQuestion > 0 ? 'block' : 'none';
+            document.getElementById('nextBtn').disabled = !answers[question.id];
+            document.getElementById('nextBtn').textContent = currentQuestion === quizQuestions.length - 1 ? 'View Results' : 'Next';
+        }
+
+        function selectAnswer(questionId, optionId) {
+            answers[questionId] = optionId;
+            renderQuestion();
+        }
+
+        function goNext() {
+            if (currentQuestion < quizQuestions.length - 1) {
+                currentQuestion++;
+                renderQuestion();
+            } else {
+                calculateResults();
+            }
+        }
+
+        function goBack() {
+            if (currentQuestion > 0) {
+                currentQuestion--;
+                renderQuestion();
+            }
+        }
+
+        function calculateResults() {
+            // Reset scores
+            scores = { tm: 0, tmnte: 0, gmp: 0, ffp: 0 };
+
+            // Calculate total scores
+            quizQuestions.forEach(question => {
+                const answerId = answers[question.id];
+                const option = question.options.find(opt => opt.id === answerId);
+                if (option) {
+                    scores.tm += option.scores.tm;
+                    scores.tmnte += option.scores.tmnte;
+                    scores.gmp += option.scores.gmp;
+                    scores.ffp += option.scores.ffp;
+                }
+            });
+
+            displayResults();
+        }
+
+        function displayResults() {
+            // Find recommended contract (highest score)
+            const maxScore = Math.max(scores.tm, scores.tmnte, scores.gmp, scores.ffp);
+            let recommended = '';
+            let recommendedFull = '';
+            let reason = '';
+
+            if (scores.tm === maxScore) {
+                recommended = 'T&M';
+                recommendedFull = 'Time & Materials';
+                reason = 'Your project characteristics indicate a Time & Materials contract is optimal. This approach provides maximum flexibility for your early-stage design and evolving scope. Your strong PM capability ensures appropriate cost oversight, and your budget flexibility accommodates the cost uncertainty inherent in T&M contracts.';
+            } else if (scores.tmnte === maxScore) {
+                recommended = 'T&M with NTE';
+                recommendedFull = 'Time & Materials with Not-To-Exceed';
+                reason = 'Your project profile suggests a T&M with Not-To-Exceed structure. This provides the flexibility needed for your partially defined scope while protecting your budget through a contractual spending ceiling. This balanced approach aligns with your moderate design completion and budget constraints.';
+            } else if (scores.gmp === maxScore) {
+                recommended = 'GMP';
+                recommendedFull = 'Guaranteed Maximum Price';
+                reason = 'A Guaranteed Maximum Price contract is recommended for your project. Your design is sufficiently developed to establish a meaningful cost ceiling, and this structure provides budget protection while maintaining some scope flexibility. The potential for shared savings aligns contractor and owner incentives toward cost efficiency.';
+            } else {
+                recommended = 'FFP';
+                recommendedFull = 'Firm Fixed Price';
+                reason = 'A Firm Fixed Price contract is the optimal choice for your project. Your complete design documentation eliminates scope ambiguity, enabling accurate contractor pricing. Your fixed budget requirement and stable scope make FFP the most appropriate structure. This approach provides maximum cost certainty and minimizes owner risk.';
+            }
+
+            // Get alternative contracts
+            const sortedContracts = [
+                { name: 'T&M', full: 'Time & Materials', score: scores.tm },
+                { name: 'T&M W/NTE', full: 'Time & Materials with NTE', score: scores.tmnte },
+                { name: 'GMP', full: 'Guaranteed Maximum Price', score: scores.gmp },
+                { name: 'FFP', full: 'Firm Fixed Price', score: scores.ffp }
+            ].sort((a, b) => b.score - a.score);
+
+            const alternatives = sortedContracts.slice(1, 3);
+
+            // Build answer summary
+            let answerSummary = '';
+            quizQuestions.forEach(question => {
+                const answerId = answers[question.id];
+                const option = question.options.find(opt => opt.id === answerId);
+                if (option) {
+                    answerSummary += `
+                        <div class="answer-item">
+                            <div class="answer-label">${question.title}</div>
+                            <div class="answer-value">${option.title}</div>
+                        </div>
+                    `;
+                }
+            });
+
+            // Display results
+            const container = document.getElementById('questionContainer');
+            container.innerHTML = `
+                <div class="results-container">
+                    <div class="recommended-contract">
+                        <h3>Recommended Contract Type</h3>
+                        <div class="contract-name">${recommendedFull}</div>
+                        <div class="recommendation-reason">${reason}</div>
+                    </div>
+
+                    <div class="your-answers">
+                        <h4>Your Project Profile</h4>
+                        <div class="answer-summary">
+                            ${answerSummary}
+                        </div>
+                    </div>
+
+                    <div class="alternative-contracts">
+                        <h4>Alternative Considerations</h4>
+                        ${alternatives.map(alt => {
+                            let altReason = '';
+                            if (alt.name === 'T&M') {
+                                altReason = 'Consider if scope definition decreases or if greater flexibility is required during execution.';
+                            } else if (alt.name === 'T&M W/NTE') {
+                                altReason = 'Consider if you need more flexibility than GMP provides but require budget protection.';
+                            } else if (alt.name === 'GMP') {
+                                altReason = 'Consider if you want to balance cost certainty with some scope flexibility and shared savings potential.';
+                            } else {
+                                altReason = 'Consider if your design completion increases or if you need complete cost certainty.';
+                            }
+                            return `
+                                <div class="alternative-item">
+                                    <div class="alternative-name">${alt.full} (Score: ${alt.score})</div>
+                                    <div class="alternative-reason">${altReason}</div>
+                                </div>
+                            `;
+                        }).join('')}
+                    </div>
+                </div>
+            `;
+
+            // Update button
+            document.getElementById('backBtn').style.display = 'none';
+            document.getElementById('nextBtn').textContent = 'Start Over';
+            document.getElementById('nextBtn').disabled = false;
+            document.getElementById('nextBtn').onclick = resetQuiz;
+        }
+
+        function resetQuiz() {
+            currentQuestion = 0;
+            answers = {};
+            scores = { tm: 0, tmnte: 0, gmp: 0, ffp: 0 };
+            document.getElementById('nextBtn').onclick = goNext;
+            renderQuestion();
+        }
+
+        // Initialize quiz
+        document.getElementById('nextBtn').addEventListener('click', goNext);
+        document.getElementById('backBtn').addEventListener('click', goBack);
+        renderQuestion();
+
         // ============================================
         // SCATTER PLOT CHART
         // ============================================
@@ -1640,7 +1663,7 @@
             barChart = new Chart(ctx, config);
         }
 
-        // Initialize both charts
+        // Initialize charts
         createScatterButtons();
         updateScatterChart();
         createBarButtons();

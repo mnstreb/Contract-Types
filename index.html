@@ -257,6 +257,11 @@
                 description: 'Higher = More difficult to manage changes',
                 type: 'x'
             },
+            scopeClarityRequired: {
+                label: 'Required Scope Clarity Prior to Contract',
+                description: 'Higher = More design/definition needed before signing',
+                type: 'x'
+            },
             costBenefit: {
                 label: 'Contractor Profit Potential',
                 description: 'Higher = Greater profit opportunity',
@@ -275,6 +280,11 @@
             clientScheduleEnforcement: {
                 label: 'Client Schedule Enforcement',
                 description: 'Higher = Better ability to enforce schedule',
+                type: 'y'
+            },
+            contractorAutonomy: {
+                label: 'Contractor Execution Autonomy',
+                description: 'Higher = More contractor control over means, methods & sequencing',
                 type: 'y'
             }
         };
@@ -314,6 +324,60 @@
                 { name: 'T&M', x: 2, y: 2, color: '#3b82f6' },
                 { name: 'T&M W/NTE', x: 4, y: 5, color: '#8b5cf6' },
                 { name: 'GMP', x: 6, y: 7, color: '#f59e0b' },
+                { name: 'FFP', x: 9, y: 9, color: '#ef4444' }
+            ],
+            scopeClarityRequired_costBenefit: [
+                { name: 'T&M', x: 2, y: 4, color: '#3b82f6' },
+                { name: 'T&M W/NTE', x: 4, y: 5, color: '#8b5cf6' },
+                { name: 'GMP', x: 7, y: 7, color: '#f59e0b' },
+                { name: 'FFP', x: 9, y: 8, color: '#ef4444' }
+            ],
+            scopeClarityRequired_scheduleBenefit: [
+                { name: 'T&M', x: 2, y: 8, color: '#3b82f6' },
+                { name: 'T&M W/NTE', x: 4, y: 6, color: '#8b5cf6' },
+                { name: 'GMP', x: 7, y: 4, color: '#f59e0b' },
+                { name: 'FFP', x: 9, y: 2, color: '#ef4444' }
+            ],
+            scopeClarityRequired_clientCostControl: [
+                { name: 'T&M', x: 2, y: 2, color: '#3b82f6' },
+                { name: 'T&M W/NTE', x: 4, y: 5, color: '#8b5cf6' },
+                { name: 'GMP', x: 7, y: 7, color: '#f59e0b' },
+                { name: 'FFP', x: 9, y: 9, color: '#ef4444' }
+            ],
+            scopeClarityRequired_clientScheduleEnforcement: [
+                { name: 'T&M', x: 2, y: 2, color: '#3b82f6' },
+                { name: 'T&M W/NTE', x: 4, y: 4, color: '#8b5cf6' },
+                { name: 'GMP', x: 7, y: 7, color: '#f59e0b' },
+                { name: 'FFP', x: 9, y: 9, color: '#ef4444' }
+            ],
+            costRisk_contractorAutonomy: [
+                { name: 'T&M', x: 2, y: 2, color: '#3b82f6' },
+                { name: 'T&M W/NTE', x: 4, y: 4, color: '#8b5cf6' },
+                { name: 'GMP', x: 6, y: 7, color: '#f59e0b' },
+                { name: 'FFP', x: 9, y: 9, color: '#ef4444' }
+            ],
+            scheduleRisk_contractorAutonomy: [
+                { name: 'T&M', x: 2, y: 2, color: '#3b82f6' },
+                { name: 'T&M W/NTE', x: 4, y: 4, color: '#8b5cf6' },
+                { name: 'GMP', x: 7, y: 7, color: '#f59e0b' },
+                { name: 'FFP', x: 9, y: 9, color: '#ef4444' }
+            ],
+            clientCostExposure_contractorAutonomy: [
+                { name: 'T&M', x: 9, y: 2, color: '#3b82f6' },
+                { name: 'T&M W/NTE', x: 6, y: 4, color: '#8b5cf6' },
+                { name: 'GMP', x: 4, y: 7, color: '#f59e0b' },
+                { name: 'FFP', x: 1, y: 9, color: '#ef4444' }
+            ],
+            changeOrderComplexity_contractorAutonomy: [
+                { name: 'T&M', x: 1, y: 2, color: '#3b82f6' },
+                { name: 'T&M W/NTE', x: 3, y: 4, color: '#8b5cf6' },
+                { name: 'GMP', x: 5, y: 7, color: '#f59e0b' },
+                { name: 'FFP', x: 8, y: 9, color: '#ef4444' }
+            ],
+            scopeClarityRequired_contractorAutonomy: [
+                { name: 'T&M', x: 2, y: 2, color: '#3b82f6' },
+                { name: 'T&M W/NTE', x: 4, y: 4, color: '#8b5cf6' },
+                { name: 'GMP', x: 7, y: 7, color: '#f59e0b' },
                 { name: 'FFP', x: 9, y: 9, color: '#ef4444' }
             ]
         };

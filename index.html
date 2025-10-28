@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contract Type Risk vs Benefit Analysis</title>
+    <title>Construction Contract Types | Strategic Analysis Framework</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
     <style>
         * {
@@ -13,432 +13,1396 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
-            padding: 20px;
-            min-height: 100vh;
+            font-family: 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+            background: #ffffff;
+            color: #2c3e50;
+            line-height: 1.6;
         }
 
-        .container {
-            max-width: 1200px;
+        /* Navigation */
+        nav {
+            background: #1a252f;
+            color: white;
+            padding: 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid #0066cc;
+        }
+
+        nav .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        nav h1 {
+            font-size: 1.1em;
+            font-weight: 600;
+            padding: 20px 0;
+            letter-spacing: 0.5px;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 0;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 20px 20px;
+            transition: background 0.2s;
+            font-weight: 500;
+            font-size: 0.95em;
+            display: block;
+        }
+
+        nav a:hover {
+            background: rgba(255,255,255,0.1);
+        }
+
+        /* Sections */
+        section {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 60px 40px;
+        }
+
+        section h2 {
+            font-size: 2em;
+            color: #1a252f;
+            margin-bottom: 12px;
+            font-weight: 600;
+            border-bottom: 3px solid #0066cc;
+            padding-bottom: 12px;
+        }
+
+        section .subtitle {
+            color: #5a6c7d;
+            margin-bottom: 40px;
+            font-size: 1.05em;
+        }
+
+        /* Hero */
+        #hero {
+            background: linear-gradient(135deg, #1a252f 0%, #2c3e50 100%);
+            color: white;
+            text-align: center;
+            padding: 80px 40px;
+            border-bottom: 4px solid #0066cc;
+        }
+
+        #hero h1 {
+            font-size: 2.8em;
+            margin-bottom: 16px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        #hero p {
+            font-size: 1.15em;
+            color: #cbd5e0;
+            max-width: 800px;
             margin: 0 auto;
         }
 
-        h1 {
-            color: #1e293b;
-            font-size: 2em;
-            margin-bottom: 10px;
-        }
-
-        .subtitle {
-            color: #475569;
-            margin-bottom: 30px;
-        }
-
-        .selectors {
-            background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            margin-bottom: 30px;
-        }
-
-        .selector-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 30px;
-            margin-bottom: 20px;
-        }
-
-        @media (max-width: 768px) {
-            .selector-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .selector-group {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .selector-label {
-            font-weight: bold;
-            color: #1e293b;
-            margin-bottom: 12px;
+        #hero .contract-types {
+            margin-top: 30px;
             font-size: 0.95em;
+            color: #a0aec0;
+            letter-spacing: 2px;
+        }
+
+        /* Charts Sections */
+        .chart-controls {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+            margin-bottom: 30px;
+        }
+
+        .control-group {
+            margin-bottom: 24px;
+        }
+
+        .control-group:last-child {
+            margin-bottom: 0;
+        }
+
+        .control-label {
+            font-weight: 600;
+            color: #1a252f;
+            margin-bottom: 12px;
+            display: block;
+            font-size: 0.95em;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .button-group {
             display: flex;
-            flex-direction: column;
-            gap: 8px;
+            gap: 10px;
+            flex-wrap: wrap;
         }
 
         .metric-btn {
-            padding: 12px 16px;
-            border: none;
-            border-radius: 8px;
-            background: #f1f5f9;
-            color: #475569;
+            padding: 10px 18px;
+            border: 1px solid #cbd5e0;
+            border-radius: 3px;
+            background: white;
+            color: #2c3e50;
             cursor: pointer;
             transition: all 0.2s;
-            text-align: left;
+            font-weight: 500;
             font-size: 0.9em;
-            font-weight: 600;
         }
 
         .metric-btn:hover {
-            background: #e2e8f0;
+            border-color: #0066cc;
+            color: #0066cc;
         }
 
-        .metric-btn.active-x {
-            background: #3b82f6;
+        .metric-btn.active-x,
+        .metric-btn.active {
+            background: #0066cc;
             color: white;
-            box-shadow: 0 2px 4px rgba(59, 130, 246, 0.3);
+            border-color: #0066cc;
         }
 
         .metric-btn.active-y {
-            background: #f97316;
+            background: #2c3e50;
             color: white;
-            box-shadow: 0 2px 4px rgba(249, 115, 22, 0.3);
+            border-color: #2c3e50;
         }
 
-        .description-box {
-            background: #eff6ff;
-            border: 1px solid #bfdbfe;
-            border-left: 4px solid #3b82f6;
-            padding: 16px;
-            border-radius: 8px;
-            color: #1e293b;
-            font-size: 0.9em;
+        .info-box {
+            background: #e8f4f8;
+            border-left: 4px solid #0066cc;
+            padding: 16px 20px;
+            border-radius: 3px;
+            color: #2c3e50;
+            font-size: 0.95em;
         }
 
         .chart-container {
             background: white;
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            padding: 40px;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
             margin-bottom: 30px;
         }
 
         .chart-title {
             text-align: center;
-            color: #1e293b;
+            margin-bottom: 30px;
+            color: #1a252f;
             font-size: 1.3em;
-            font-weight: bold;
-            margin-bottom: 20px;
+            font-weight: 600;
         }
 
+        /* Legend Cards */
         .legend-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
         }
 
-        .legend-item {
+        .legend-card {
             background: white;
-            padding: 16px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            border-radius: 3px;
             border-left: 4px solid;
+            border-top: 1px solid #dee2e6;
+            border-right: 1px solid #dee2e6;
+            border-bottom: 1px solid #dee2e6;
         }
 
-        .legend-item.tm { border-left-color: #3b82f6; }
-        .legend-item.tm-nte { border-left-color: #8b5cf6; }
-        .legend-item.gmp { border-left-color: #f59e0b; }
-        .legend-item.ffp { border-left-color: #ef4444; }
-
-        .legend-header {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-        }
-
-        .legend-dot {
-            width: 16px;
-            height: 16px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
+        .legend-card.tm { border-left-color: #0066cc; }
+        .legend-card.tm-nte { border-left-color: #6366f1; }
+        .legend-card.gmp { border-left-color: #f59e0b; }
+        .legend-card.ffp { border-left-color: #dc2626; }
 
         .legend-title {
-            font-weight: bold;
-            color: #1e293b;
+            font-weight: 600;
+            color: #1a252f;
+            margin-bottom: 4px;
+            font-size: 1.05em;
         }
 
         .legend-desc {
-            font-size: 0.85em;
-            color: #64748b;
+            color: #5a6c7d;
+            font-size: 0.9em;
         }
 
-        canvas {
-            max-height: 500px;
+        /* Decision Tree */
+        .decision-tree {
+            background: white;
+            padding: 40px;
+            border-radius: 4px;
+            border: 1px solid #dee2e6;
+        }
+
+        .decision-level {
+            margin-bottom: 50px;
+        }
+
+        .decision-level:last-child {
+            margin-bottom: 0;
+        }
+
+        .level-title {
+            background: #1a252f;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 3px;
+            font-size: 1.1em;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 20px;
+            letter-spacing: 0.5px;
+        }
+
+        .level-question {
+            font-size: 1.15em;
+            font-weight: 600;
+            color: #1a252f;
+            margin-bottom: 24px;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .option-card {
+            background: #f8f9fa;
+            padding: 24px;
+            border-radius: 3px;
+            border-left: 4px solid;
+            border-top: 1px solid #dee2e6;
+            border-right: 1px solid #dee2e6;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .option-card.tm { border-left-color: #0066cc; }
+        .option-card.tm-nte { border-left-color: #6366f1; }
+        .option-card.gmp { border-left-color: #f59e0b; }
+        .option-card.ffp { border-left-color: #dc2626; }
+
+        .option-title {
+            font-weight: 600;
+            font-size: 1.05em;
+            color: #1a252f;
+            margin-bottom: 12px;
+        }
+
+        .option-description {
+            color: #5a6c7d;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        /* Case Studies */
+        .cases-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(500px, 1fr));
+            gap: 30px;
+        }
+
+        .case-card {
+            background: white;
+            border-radius: 3px;
+            border: 1px solid #dee2e6;
+            overflow: hidden;
+        }
+
+        .case-header {
+            padding: 24px;
+            color: white;
+            border-bottom: 3px solid rgba(255,255,255,0.3);
+        }
+
+        .case-header.tm { background: #0066cc; }
+        .case-header.ffp { background: #dc2626; }
+        .case-header.gmp { background: #f59e0b; }
+        .case-header.tm-nte { background: #6366f1; }
+
+        .contract-label {
+            display: inline-block;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 3px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .case-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .case-subtitle {
+            font-size: 0.95em;
+            opacity: 0.9;
+        }
+
+        .case-body {
+            padding: 28px;
+        }
+
+        .case-section {
+            margin-bottom: 24px;
+        }
+
+        .case-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .section-title {
+            font-weight: 600;
+            color: #1a252f;
+            margin-bottom: 10px;
+            font-size: 1.05em;
+        }
+
+        .section-content {
+            color: #5a6c7d;
+            line-height: 1.7;
+        }
+
+        .metrics-display {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .metric-box {
+            background: #f8f9fa;
+            padding: 12px;
+            border-radius: 3px;
+            border-left: 3px solid #0066cc;
+        }
+
+        .metric-label {
+            font-size: 0.85em;
+            color: #5a6c7d;
+            margin-bottom: 4px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .metric-value {
+            font-weight: 600;
+            color: #1a252f;
+            font-size: 1.05em;
+        }
+
+        .outcome-box {
+            background: #d1fae5;
+            border-left: 4px solid #059669;
+            padding: 18px;
+            border-radius: 3px;
+            margin-top: 20px;
+        }
+
+        .outcome-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #065f46;
+        }
+
+        .outcome-content {
+            font-size: 0.95em;
+            line-height: 1.6;
+            color: #047857;
+        }
+
+        /* Cheat Sheet */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 3px;
+            overflow: hidden;
+            border: 1px solid #dee2e6;
+        }
+
+        .comparison-table th {
+            background: #1a252f;
+            color: white;
+            padding: 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95em;
+            letter-spacing: 0.3px;
+        }
+
+        .comparison-table td {
+            padding: 16px;
+            border-bottom: 1px solid #dee2e6;
+            font-size: 0.95em;
+        }
+
+        .comparison-table tr:hover {
+            background: #f8f9fa;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .tm-col { border-left: 3px solid #0066cc; }
+        .tm-nte-col { border-left: 3px solid #6366f1; }
+        .gmp-col { border-left: 3px solid #f59e0b; }
+        .ffp-col { border-left: 3px solid #dc2626; }
+
+        .contract-col {
+            background: #f8f9fa;
+            font-weight: 600;
+        }
+
+        /* Red Flags */
+        .red-flag-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 24px;
+        }
+
+        .red-flag-item {
+            background: white;
+            border-left: 4px solid #dc2626;
+            padding: 24px;
+            border-radius: 3px;
+            border-top: 1px solid #dee2e6;
+            border-right: 1px solid #dee2e6;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .red-flag-title {
+            font-weight: 600;
+            color: #991b1b;
+            margin-bottom: 12px;
+            font-size: 1.05em;
+        }
+
+        .red-flag-desc {
+            color: #5a6c7d;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+
+        .key-principle {
+            background: white;
+            border-left: 4px solid #0066cc;
+            padding: 30px;
+            border-radius: 3px;
+            margin-top: 40px;
+            border-top: 1px solid #dee2e6;
+            border-right: 1px solid #dee2e6;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .key-principle h3 {
+            color: #1a252f;
+            margin-bottom: 12px;
+            font-size: 1.3em;
+            font-weight: 600;
+        }
+
+        .key-principle p {
+            color: #5a6c7d;
+            line-height: 1.7;
+            font-size: 1.05em;
+        }
+
+        ul {
+            margin-left: 24px;
+            margin-top: 12px;
+        }
+
+        li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+            color: #5a6c7d;
+        }
+
+        strong {
+            color: #1a252f;
+            font-weight: 600;
+        }
+
+        /* Print button */
+        .action-btn {
+            background: #0066cc;
+            color: white;
+            border: none;
+            padding: 12px 28px;
+            border-radius: 3px;
+            font-size: 0.95em;
+            cursor: pointer;
+            font-weight: 600;
+            margin-bottom: 24px;
+            letter-spacing: 0.3px;
+        }
+
+        .action-btn:hover {
+            background: #0052a3;
+        }
+
+        @media (max-width: 768px) {
+            nav .container {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            nav ul {
+                width: 100%;
+                flex-direction: column;
+            }
+
+            nav a {
+                width: 100%;
+            }
+
+            #hero h1 {
+                font-size: 2em;
+            }
+
+            section {
+                padding: 40px 20px;
+            }
+
+            section h2 {
+                font-size: 1.6em;
+            }
+
+            .cases-grid,
+            .options-grid,
+            .red-flag-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .legend-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media print {
+            nav, .action-btn {
+                display: none;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1>Contract Type Risk vs Benefit Analysis</h1>
-        <p class="subtitle">Compare contractor and client perspectives across different metrics</p>
+    <!-- Navigation -->
+    <nav>
+        <div class="container">
+            <h1>CONSTRUCTION CONTRACT TYPES | STRATEGIC ANALYSIS</h1>
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#scatter">Risk Analysis</a></li>
+                <li><a href="#bars">Comparisons</a></li>
+                <li><a href="#decision">Decision Framework</a></li>
+                <li><a href="#cases">Case Studies</a></li>
+                <li><a href="#reference">Reference</a></li>
+                <li><a href="#considerations">Key Considerations</a></li>
+            </ul>
+        </div>
+    </nav>
 
-        <div class="selectors">
-            <div class="selector-grid">
-                <div class="selector-group">
-                    <div class="selector-label">X-Axis (Risk/Exposure):</div>
-                    <div class="button-group" id="xButtons"></div>
-                </div>
-                <div class="selector-group">
-                    <div class="selector-label">Y-Axis (Benefit/Control):</div>
-                    <div class="button-group" id="yButtons"></div>
-                </div>
+    <!-- Hero Section -->
+    <section id="overview">
+        <div id="hero">
+            <h1>Construction Contract Type Selection</h1>
+            <p>Strategic framework for procurement decision-making and risk allocation analysis</p>
+            <p class="contract-types">TIME & MATERIALS | T&M WITH NTE | GUARANTEED MAXIMUM PRICE | FIRM FIXED PRICE</p>
+        </div>
+    </section>
+
+    <!-- Scatter Plot Chart -->
+    <section id="scatter">
+        <h2>Risk-Benefit Analysis Matrix</h2>
+        <p class="subtitle">Comparative analysis across multiple performance dimensions</p>
+
+        <div class="chart-controls">
+            <div class="control-group">
+                <span class="control-label">X-Axis: Risk and Exposure Metrics</span>
+                <div class="button-group" id="xButtons"></div>
             </div>
-            <div class="description-box">
-                <strong>X:</strong> <span id="xDesc"></span> | 
-                <strong>Y:</strong> <span id="yDesc"></span>
+            <div class="control-group">
+                <span class="control-label">Y-Axis: Benefit and Control Metrics</span>
+                <div class="button-group" id="yButtons"></div>
+            </div>
+            <div class="info-box">
+                <strong>X-Axis:</strong> <span id="xDesc"></span><br>
+                <strong>Y-Axis:</strong> <span id="yDesc"></span>
             </div>
         </div>
 
         <div class="chart-container">
-            <div class="chart-title" id="chartTitle"></div>
+            <h3 class="chart-title" id="scatterTitle"></h3>
             <canvas id="scatterChart"></canvas>
         </div>
 
         <div class="legend-grid">
-            <div class="legend-item tm">
-                <div class="legend-header">
-                    <div class="legend-dot" style="background: #3b82f6;"></div>
-                    <div class="legend-title">T&M</div>
-                </div>
-                <div class="legend-desc">Time & Materials - Full cost pass-through</div>
+            <div class="legend-card tm">
+                <div class="legend-title">Time & Materials (T&M)</div>
+                <div class="legend-desc">Cost-plus reimbursement structure with full cost pass-through to client</div>
             </div>
-            <div class="legend-item tm-nte">
-                <div class="legend-header">
-                    <div class="legend-dot" style="background: #8b5cf6;"></div>
-                    <div class="legend-title">T&M W/NTE</div>
-                </div>
-                <div class="legend-desc">With spending cap limit</div>
+            <div class="legend-card tm-nte">
+                <div class="legend-title">T&M with Not-To-Exceed (NTE)</div>
+                <div class="legend-desc">Cost-plus structure with contractual spending ceiling for budget protection</div>
             </div>
-            <div class="legend-item gmp">
-                <div class="legend-header">
-                    <div class="legend-dot" style="background: #f59e0b;"></div>
-                    <div class="legend-title">GMP</div>
-                </div>
-                <div class="legend-desc">Guaranteed Maximum Price</div>
+            <div class="legend-card gmp">
+                <div class="legend-title">Guaranteed Maximum Price (GMP)</div>
+                <div class="legend-desc">Cost-capped agreement with potential savings distribution between parties</div>
             </div>
-            <div class="legend-item ffp">
-                <div class="legend-header">
-                    <div class="legend-dot" style="background: #ef4444;"></div>
-                    <div class="legend-title">FFP</div>
-                </div>
-                <div class="legend-desc">Firm Fixed Price - All risk to contractor</div>
+            <div class="legend-card ffp">
+                <div class="legend-title">Firm Fixed Price (FFP)</div>
+                <div class="legend-desc">Lump sum contract with complete cost risk transfer to contractor</div>
             </div>
         </div>
-    </div>
+    </section>
+
+    <!-- Bar Charts -->
+    <section id="bars">
+        <h2>Comparative Risk Profiles</h2>
+        <p class="subtitle">Client and contractor perspective analysis</p>
+
+        <div class="button-group" id="barButtons"></div>
+
+        <div class="info-box" style="margin-top: 20px;">
+            <strong id="barMetricTitle"></strong><br>
+            <span id="barMetricDescription"></span>
+        </div>
+
+        <div class="chart-container">
+            <canvas id="barChart"></canvas>
+        </div>
+    </section>
+
+    <!-- Decision Tree -->
+    <section id="decision">
+        <h2>Contract Selection Decision Framework</h2>
+        <p class="subtitle">Systematic approach to contract type determination</p>
+
+        <div class="decision-tree">
+            <div class="decision-level">
+                <div class="level-title">PHASE 1: PROJECT READINESS ASSESSMENT</div>
+                <div class="level-question">Design Completion and Scope Definition Status</div>
+                <div class="options-grid">
+                    <div class="option-card tm">
+                        <div class="option-title">0-30% Design Development</div>
+                        <div class="option-description">
+                            Conceptual phase with preliminary scope definition. Requirements continue to evolve during execution.
+                            <br><br><strong>Recommended Approach: Time & Materials</strong>
+                        </div>
+                    </div>
+                    <div class="option-card tm-nte">
+                        <div class="option-title">30-60% Design Development</div>
+                        <div class="option-description">
+                            Schematic design phase with major systems identified. Sufficient definition for cost envelope estimation.
+                            <br><br><strong>Recommended Approach: T&M with NTE or GMP</strong>
+                        </div>
+                    </div>
+                    <div class="option-card gmp">
+                        <div class="option-title">60-90% Design Development</div>
+                        <div class="option-description">
+                            Design development phase with primary decisions finalized. Minor details under refinement.
+                            <br><br><strong>Recommended Approach: Guaranteed Maximum Price</strong>
+                        </div>
+                    </div>
+                    <div class="option-card ffp">
+                        <div class="option-title">90-100% Design Complete</div>
+                        <div class="option-description">
+                            Construction documents complete with full specifications. Scope fully defined and documented.
+                            <br><br><strong>Recommended Approach: Firm Fixed Price</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="decision-level">
+                <div class="level-title">PHASE 2: BUDGET AND FINANCIAL CONSTRAINTS</div>
+                <div class="level-question">Budget Flexibility and Funding Requirements</div>
+                <div class="options-grid">
+                    <div class="option-card ffp">
+                        <div class="option-title">Fixed Budget Requirement</div>
+                        <div class="option-description">
+                            Board-approved allocation with no contingency. Financing or regulatory requirements mandate cost certainty.
+                            <br><br><strong>Suitable Approaches: FFP or GMP</strong>
+                        </div>
+                    </div>
+                    <div class="option-card gmp">
+                        <div class="option-title">Budget with Contingency Reserve</div>
+                        <div class="option-description">
+                            Approved budget with 10-20% contingency allocation available for scope adjustments.
+                            <br><br><strong>Suitable Approaches: GMP or T&M with NTE</strong>
+                        </div>
+                    </div>
+                    <div class="option-card tm">
+                        <div class="option-title">Flexible Budget Authorization</div>
+                        <div class="option-description">
+                            Budget can be adjusted based on actual scope refinement and project requirements.
+                            <br><br><strong>Suitable Approach: Time & Materials</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="decision-level">
+                <div class="level-title">PHASE 3: ORGANIZATIONAL CAPABILITY ASSESSMENT</div>
+                <div class="level-question">Internal Project Management Resource Availability</div>
+                <div class="options-grid">
+                    <div class="option-card tm">
+                        <div class="option-title">Comprehensive PM Capability</div>
+                        <div class="option-description">
+                            Experienced construction management team available for daily oversight and cost monitoring.
+                            <br><br><strong>T&M approaches are viable with proper oversight</strong>
+                        </div>
+                    </div>
+                    <div class="option-card gmp">
+                        <div class="option-title">Moderate PM Capability</div>
+                        <div class="option-description">
+                            Capable of weekly progress reviews, change order management, and milestone verification.
+                            <br><br><strong>GMP provides optimal balance</strong>
+                        </div>
+                    </div>
+                    <div class="option-card ffp">
+                        <div class="option-title">Limited PM Resources</div>
+                        <div class="option-description">
+                            Contractor must manage day-to-day operations. Internal team focuses on milestone reviews only.
+                            <br><br><strong>FFP minimizes oversight requirements</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="decision-level" style="margin-bottom: 0;">
+                <div class="level-title">PHASE 4: SCOPE VOLATILITY ANALYSIS</div>
+                <div class="level-question">Anticipated Scope Change Probability</div>
+                <div class="options-grid">
+                    <div class="option-card tm">
+                        <div class="option-title">High Change Probability</div>
+                        <div class="option-description">
+                            Renovation projects, phased design, or significant unknowns. Discovery expected during execution.
+                            <br><br><strong>T&M provides necessary flexibility</strong>
+                        </div>
+                    </div>
+                    <div class="option-card gmp">
+                        <div class="option-title">Moderate Change Expectation</div>
+                        <div class="option-description">
+                            Minor refinements anticipated. Core scope stable with potential for limited adjustments.
+                            <br><br><strong>GMP or T&M with NTE appropriate</strong>
+                        </div>
+                    </div>
+                    <div class="option-card ffp">
+                        <div class="option-title">Stable Scope Definition</div>
+                        <div class="option-description">
+                            Complete design with minimal anticipated changes. Requirements thoroughly documented and validated.
+                            <br><br><strong>FFP is appropriate structure</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Case Studies -->
+    <section id="cases">
+        <h2>Implementation Case Studies</h2>
+        <p class="subtitle">Analysis of contract type applications in various project scenarios</p>
+
+        <div class="cases-grid">
+            <!-- T&M Case -->
+            <div class="case-card">
+                <div class="case-header tm">
+                    <div class="contract-label">Time & Materials</div>
+                    <div class="case-title">Biotech Laboratory Renovation</div>
+                    <div class="case-subtitle">Research Facility | Existing Building</div>
+                </div>
+                <div class="case-body">
+                    <div class="case-section">
+                        <div class="section-title">Project Context</div>
+                        <div class="section-content">
+                            15,000 SF laboratory space in 30-year-old facility. Inadequate documentation of existing MEP systems. Site conditions unknown. User requirements under development.
+                        </div>
+                        <div class="metrics-display">
+                            <div class="metric-box">
+                                <div class="metric-label">Design Status</div>
+                                <div class="metric-value">25% Complete</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Project Value</div>
+                                <div class="metric-value">$2.3M Budget</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Schedule Constraint</div>
+                                <div class="metric-value">Moderate</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">PM Resources</div>
+                                <div class="metric-value">Comprehensive</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-section">
+                        <div class="section-title">Contract Type Rationale</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Flexibility required for discovery of asbestos, outdated electrical systems, and structural deficiencies</li>
+                                <li>Phased design approach enabled concurrent demolition and design refinement</li>
+                                <li>User stakeholder input integrated throughout execution without formal change orders</li>
+                                <li>Established relationship and trust with contractor supported cost transparency</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="outcome-box">
+                        <div class="outcome-title">Project Outcome</div>
+                        <div class="outcome-content">
+                            Completed in 8 months with final cost of $2.4M (4% variance from initial estimate). Avoided 6-month delay that would have resulted from FFP procurement process. Final deliverable precisely matched end-user requirements developed during construction.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- FFP Case -->
+            <div class="case-card">
+                <div class="case-header ffp">
+                    <div class="contract-label">Firm Fixed Price</div>
+                    <div class="case-title">Corporate Office Build-Out</div>
+                    <div class="case-subtitle">Technology Company | Class A Office Space</div>
+                </div>
+                <div class="case-body">
+                    <div class="case-section">
+                        <div class="section-title">Project Context</div>
+                        <div class="section-content">
+                            50,000 SF lease space with complete architectural design. Standard commercial finishes with clear specifications. CFO required fixed cost for board approval and lease guarantee commitments.
+                        </div>
+                        <div class="metrics-display">
+                            <div class="metric-box">
+                                <div class="metric-label">Design Status</div>
+                                <div class="metric-value">100% Complete</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Project Value</div>
+                                <div class="metric-value">$3.8M Fixed</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Budget Flexibility</div>
+                                <div class="metric-value">None</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">PM Resources</div>
+                                <div class="metric-value">Limited</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-section">
+                        <div class="section-title">Contract Type Rationale</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Complete design documentation eliminated scope ambiguity and enabled accurate contractor pricing</li>
+                                <li>Competitive procurement with five qualified bidders resulted in 12% cost reduction versus budget</li>
+                                <li>Fixed cost provided necessary certainty for corporate lease commitment and financial planning</li>
+                                <li>Limited internal PM resources appropriate given contractor assumption of day-to-day management</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="outcome-box">
+                        <div class="outcome-title">Project Outcome</div>
+                        <div class="outcome-content">
+                            Delivered on schedule and on budget at $3.8M contract value. Two minor owner-initiated change orders totaling $85K. Contractor achieved satisfactory profit margin. Optimal outcome for well-defined scope with appropriate contract structure.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- GMP Case -->
+            <div class="case-card">
+                <div class="case-header gmp">
+                    <div class="contract-label">Guaranteed Maximum Price</div>
+                    <div class="case-title">Healthcare Facility Expansion</div>
+                    <div class="case-subtitle">Regional Hospital | New Surgical Wing</div>
+                </div>
+                <div class="case-body">
+                    <div class="case-section">
+                        <div class="section-title">Project Context</div>
+                        <div class="section-content">
+                            40,000 SF surgical wing addition to operational hospital. Equipment procurement finalization required during construction. Board of Directors mandated maximum price guarantee for financing while maintaining opportunity to benefit from cost efficiencies.
+                        </div>
+                        <div class="metrics-display">
+                            <div class="metric-box">
+                                <div class="metric-label">Design Status</div>
+                                <div class="metric-value">65% Complete</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">GMP Value</div>
+                                <div class="metric-value">$28M Maximum</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Duration</div>
+                                <div class="metric-value">18 Months</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Savings Split</div>
+                                <div class="metric-value">50/50</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-section">
+                        <div class="section-title">Contract Type Rationale</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Maximum price guarantee satisfied financing institution requirements and board fiduciary responsibilities</li>
+                                <li>50/50 savings distribution aligned contractor and owner incentives toward cost efficiency</li>
+                                <li>Structured collaboration through weekly value engineering sessions generated innovative cost solutions</li>
+                                <li>Fast-track delivery enabled site work initiation during final interior design refinement</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="outcome-box">
+                        <div class="outcome-title">Project Outcome</div>
+                        <div class="outcome-content">
+                            Final cost of $26.8M representing $1.2M savings below GMP. Owner realized $600K cost savings, contractor earned $600K performance incentive above base fee. Delivered 2 months ahead of schedule. Partnership approach led to selection of same structure for subsequent expansion phases.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- T&M W/NTE Case -->
+            <div class="case-card">
+                <div class="case-header tm-nte">
+                    <div class="contract-label">T&M with Not-To-Exceed</div>
+                    <div class="case-title">Multi-Site Retail Renovation</div>
+                    <div class="case-subtitle">National Retailer | 15 Locations</div>
+                </div>
+                <div class="case-body">
+                    <div class="case-section">
+                        <div class="section-title">Project Context</div>
+                        <div class="section-content">
+                            Simultaneous renovation of 15 retail locations. Similar scope with site-specific variations in size, existing conditions, and local code requirements. Procurement efficiency and budget control both required.
+                        </div>
+                        <div class="metrics-display">
+                            <div class="metric-box">
+                                <div class="metric-label">Design Per Site</div>
+                                <div class="metric-value">40-60% Range</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">NTE Per Site</div>
+                                <div class="metric-value">$180K Maximum</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Schedule</div>
+                                <div class="metric-value">6 Months Total</div>
+                            </div>
+                            <div class="metric-box">
+                                <div class="metric-label">Total Budget</div>
+                                <div class="metric-value">$2.7M Cap</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="case-section">
+                        <div class="section-title">Contract Type Rationale</div>
+                        <div class="section-content">
+                            <ul>
+                                <li>Immediate mobilization without site-specific detailed procurement for each location</li>
+                                <li>Individual site caps provided budget protection while maintaining scope flexibility</li>
+                                <li>Adaptive approach enabled scope adjustments based on site-specific conditions</li>
+                                <li>Process optimization across sites as contractor team developed efficiency improvements</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="outcome-box">
+                        <div class="outcome-title">Project Outcome</div>
+                        <div class="outcome-content">
+                            14 of 15 locations completed below NTE with average cost of $165K per site. One location reached cap due to required HVAC system replacement. Total expenditure of $2.48M versus $2.7M authorized budget. Program completed in 5.5 months. Contractor maintained consistent work pipeline, owner achieved speed and cost objectives.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cheat Sheet -->
+    <section id="reference">
+        <h2>Quick Reference Matrix</h2>
+        <p class="subtitle">Comprehensive comparison of contract type characteristics</p>
+
+        <div style="text-align: center; margin-bottom: 24px;">
+            <button class="action-btn" onclick="window.print()">Print Reference Guide</button>
+        </div>
+
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Evaluation Factor</th>
+                    <th class="tm-col">T&M</th>
+                    <th class="tm-nte-col">T&M with NTE</th>
+                    <th class="gmp-col">GMP</th>
+                    <th class="ffp-col">FFP</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Formal Designation</strong></td>
+                    <td class="contract-col tm-col">Time & Materials</td>
+                    <td class="contract-col tm-nte-col">Time & Materials with Not-To-Exceed</td>
+                    <td class="contract-col gmp-col">Guaranteed Maximum Price</td>
+                    <td class="contract-col ffp-col">Firm Fixed Price</td>
+                </tr>
+                <tr>
+                    <td><strong>Required Design Completion</strong></td>
+                    <td class="tm-col">0-30%</td>
+                    <td class="tm-nte-col">30-50%</td>
+                    <td class="gmp-col">60-80%</td>
+                    <td class="ffp-col">90-100%</td>
+                </tr>
+                <tr>
+                    <td><strong>Owner Cost Risk Exposure</strong></td>
+                    <td class="tm-col">Substantial</td>
+                    <td class="tm-nte-col">Capped</td>
+                    <td class="gmp-col">Limited with Ceiling</td>
+                    <td class="ffp-col">Minimal</td>
+                </tr>
+                <tr>
+                    <td><strong>Contractor Cost Risk</strong></td>
+                    <td class="tm-col">Minimal</td>
+                    <td class="tm-nte-col">Moderate</td>
+                    <td class="gmp-col">Significant</td>
+                    <td class="ffp-col">Complete</td>
+                </tr>
+                <tr>
+                    <td><strong>Typical Fee/Markup Range</strong></td>
+                    <td class="tm-col">10-15%</td>
+                    <td class="tm-nte-col">12-18%</td>
+                    <td class="gmp-col">15-20%</td>
+                    <td class="ffp-col">20-30%</td>
+                </tr>
+                <tr>
+                    <td><strong>Procurement Timeline</strong></td>
+                    <td class="tm-col">3-7 Days</td>
+                    <td class="tm-nte-col">1-2 Weeks</td>
+                    <td class="gmp-col">2-4 Weeks</td>
+                    <td class="ffp-col">4-12 Weeks</td>
+                </tr>
+                <tr>
+                    <td><strong>Scope Change Management</strong></td>
+                    <td class="tm-col">Minimal Process</td>
+                    <td class="tm-nte-col">Moderate Formality</td>
+                    <td class="gmp-col">Formal Negotiation</td>
+                    <td class="ffp-col">Extensive Process</td>
+                </tr>
+                <tr>
+                    <td><strong>Owner Oversight Requirement</strong></td>
+                    <td class="tm-col">Daily Monitoring</td>
+                    <td class="tm-nte-col">Weekly Review</td>
+                    <td class="gmp-col">Weekly Review</td>
+                    <td class="ffp-col">Milestone Verification</td>
+                </tr>
+                <tr>
+                    <td><strong>Cost Transparency Level</strong></td>
+                    <td class="tm-col">Complete Visibility</td>
+                    <td class="tm-nte-col">High Visibility</td>
+                    <td class="gmp-col">Moderate Visibility</td>
+                    <td class="ffp-col">Limited Visibility</td>
+                </tr>
+                <tr>
+                    <td><strong>Contractor Execution Autonomy</strong></td>
+                    <td class="tm-col">Limited</td>
+                    <td class="tm-nte-col">Moderate</td>
+                    <td class="gmp-col">Substantial</td>
+                    <td class="ffp-col">Complete</td>
+                </tr>
+                <tr>
+                    <td><strong>Optimal Application</strong></td>
+                    <td class="tm-col">Undefined scope, renovation, discovery expected, strong PM capability</td>
+                    <td class="tm-nte-col">Partial definition, budget constraint, moderate PM capability</td>
+                    <td class="gmp-col">Substantial definition, collaborative approach, shared risk tolerance</td>
+                    <td class="ffp-col">Complete definition, competitive procurement, fixed budget requirement</td>
+                </tr>
+                <tr>
+                    <td><strong>Unsuitable Applications</strong></td>
+                    <td class="tm-col">Fixed budget constraint, limited PM resources, low trust environment</td>
+                    <td class="tm-nte-col">Unrealistic cap, complete design, highly defined scope</td>
+                    <td class="gmp-col">Early-stage design, adversarial relationship, simple scope</td>
+                    <td class="ffp-col">Incomplete design, significant unknowns, high change probability</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- Red Flags -->
+    <section id="considerations">
+        <h2>Critical Risk Factors and Considerations</h2>
+        <p class="subtitle">Common implementation challenges and mitigation strategies</p>
+
+        <div class="red-flag-grid">
+            <div class="red-flag-item">
+                <div class="red-flag-title">Premature FFP Implementation</div>
+                <div class="red-flag-desc">
+                    <strong>Issue:</strong> Organization proceeded with FFP procurement at 30% design completion. Contractors incorporated 40% contingency loading due to scope uncertainty.
+                    <br><br>
+                    <strong>Impact:</strong> Final cost exceeded T&M alternative by $2M. Extensive rework required due to design conflicts discovered during construction.
+                    <br><br>
+                    <strong>Mitigation:</strong> FFP requires 90%+ design completion. Maintain T&M or GMP approach until adequate scope definition is achieved.
+                </div>
+            </div>
+
+            <div class="red-flag-item">
+                <div class="red-flag-title">Insufficient PM Resources for T&M</div>
+                <div class="red-flag-desc">
+                    <strong>Issue:</strong> Part-time facilities manager unable to provide daily T&M contractor oversight. Invoice validation process inadequate. Cost tracking deficient.
+                    <br><br>
+                    <strong>Impact:</strong> Project exceeded initial estimate by 60%. Lack of accountability led to scope creep and efficiency losses.
+                    <br><br>
+                    <strong>Mitigation:</strong> T&M demands experienced, dedicated PM resources. Without adequate oversight capability, utilize GMP or FFP structures.
+                </div>
+            </div>
+
+            <div class="red-flag-item">
+                <div class="red-flag-title">Premature GMP Establishment</div>
+                <div class="red-flag-desc">
+                    <strong>Issue:</strong> GMP established at 45% design with substantial scope uncertainties. Contractor set maximum value with excessive contingency to manage risk.
+                    <br><br>
+                    <strong>Impact:</strong> "Guarantee" provided no meaningful budget protection. Effectively became expensive T&M arrangement.
+                    <br><br>
+                    <strong>Mitigation:</strong> GMP requires 60%+ design completion for meaningful cost ceiling. Earlier establishment results in inflated maximum price.
+                </div>
+            </div>
+
+            <div class="red-flag-item">
+                <div class="red-flag-title">Unrealistic NTE Cap Setting</div>
+                <div class="red-flag-desc">
+                    <strong>Issue:</strong> T&M NTE established based on aspirational budget rather than realistic estimate. Cap set below feasible execution cost.
+                    <br><br>
+                    <strong>Impact:</strong> Contractor reached cap at 70% completion. Work stoppage required negotiation of cap increase or contract termination.
+                    <br><br>
+                    <strong>Mitigation:</strong> NTE must reflect realistic cost estimate plus 15-20% contingency. Cap serves as protection, not target or wish.
+                </div>
+            </div>
+
+            <div class="red-flag-item">
+                <div class="red-flag-title">Inappropriate Contract Type Selection</div>
+                <div class="red-flag-desc">
+                    <strong>Issue:</strong> Historical renovation with significant unknown conditions procured as FFP. Discovery of unforeseen conditions generated 47 change orders.
+                    <br><br>
+                    <strong>Impact:</strong> Adversarial relationship developed. Extensive disputes over change order pricing and schedule impacts.
+                    <br><br>
+                    <strong>Mitigation:</strong> Match contract structure to project characteristics. Renovation and discovery scenarios require T&M or GMP flexibility.
+                </div>
+            </div>
+
+            <div class="red-flag-item">
+                <div class="red-flag-title">Inadequate Risk Allocation Documentation</div>
+                <div class="red-flag-desc">
+                    <strong>Issue:</strong> GMP executed without clear definition of specific risk allocation (site conditions, material escalation, permit delays).
+                    <br><br>
+                    <strong>Impact:</strong> First significant issue resulted in dispute over responsibility. Ambiguous contract terms led to litigation threat.
+                    <br><br>
+                    <strong>Mitigation:</strong> Comprehensive risk allocation matrix must be documented in contract. Clarity regarding responsibility for specific risk categories is essential.
+                </div>
+            </div>
+        </div>
+
+        <div class="key-principle">
+            <h3>Fundamental Principle</h3>
+            <p>
+                Contract type selection must be driven by objective assessment of project readiness, organizational capability, budget constraints, and risk tolerance. The optimal contract structure aligns with actual project conditions rather than aspirational preferences. No contract type is universally superior; appropriateness is determined by specific project context and stakeholder capabilities. Successful procurement outcomes result from systematic alignment of contract structure with project characteristics and organizational capacity.
+            </p>
+        </div>
+    </section>
 
     <script>
-        const metrics = {
-            costRisk: {
-                label: 'Cost Risk for Contractor',
-                description: 'Higher = More financial risk for contractor',
-                type: 'x'
-            },
-            scheduleRisk: {
-                label: 'Schedule Risk for Contractor',
-                description: 'Higher = More schedule performance risk',
-                type: 'x'
-            },
-            clientCostExposure: {
-                label: 'Client Cost Exposure',
-                description: 'Higher = More cost uncertainty for client',
-                type: 'x'
-            },
-            changeOrderComplexity: {
-                label: 'Change Order Complexity',
-                description: 'Higher = More difficult to manage changes',
-                type: 'x'
-            },
-            projectDefinitionReadiness: {
-                label: 'Project Definition Readiness Required',
-                description: 'Higher = More project maturity needed (design completion, scope clarity, owner confidence)',
-                type: 'x'
-            },
-            costBenefit: {
-                label: 'Contractor Profit Potential',
-                description: 'Higher = Greater profit opportunity',
-                type: 'y'
-            },
-            scheduleBenefit: {
-                label: 'Schedule Flexibility',
-                description: 'Higher = More flexibility in schedule',
-                type: 'y'
-            },
-            clientCostControl: {
-                label: 'Client Cost Control',
-                description: 'Higher = Better cost predictability for client',
-                type: 'y'
-            },
-            clientScheduleEnforcement: {
-                label: 'Client Schedule Enforcement',
-                description: 'Higher = Better ability to enforce schedule',
-                type: 'y'
-            },
-            contractorAutonomy: {
-                label: 'Contractor Execution Autonomy',
-                description: 'Higher = More contractor control over means, methods & sequencing',
-                type: 'y'
-            }
+        // ============================================
+        // SCATTER PLOT CHART
+        // ============================================
+
+        const scatterMetrics = {
+            costRisk: { label: 'Cost Risk for Contractor', description: 'Higher values indicate increased financial risk exposure for contractor', type: 'x' },
+            scheduleRisk: { label: 'Schedule Risk for Contractor', description: 'Higher values indicate increased schedule performance risk and potential penalties', type: 'x' },
+            clientCostExposure: { label: 'Client Cost Exposure', description: 'Higher values indicate increased cost uncertainty and budget risk for client', type: 'x' },
+            changeOrderComplexity: { label: 'Change Order Complexity', description: 'Higher values indicate increased difficulty and administrative burden for scope changes', type: 'x' },
+            projectDefinitionReadiness: { label: 'Project Definition Readiness Required', description: 'Higher values indicate greater project maturity needed including design completion, scope clarity, and owner confidence', type: 'x' },
+            costBenefit: { label: 'Contractor Profit Potential', description: 'Higher values indicate greater opportunity for contractor profit margins', type: 'y' },
+            scheduleBenefit: { label: 'Schedule Flexibility', description: 'Higher values indicate greater flexibility in schedule management and sequencing', type: 'y' },
+            clientCostControl: { label: 'Client Cost Control', description: 'Higher values indicate better cost predictability and budget certainty for client', type: 'y' },
+            clientScheduleEnforcement: { label: 'Client Schedule Enforcement', description: 'Higher values indicate stronger ability to enforce schedule requirements', type: 'y' },
+            contractorAutonomy: { label: 'Contractor Execution Autonomy', description: 'Higher values indicate greater contractor control over means, methods, and project sequencing', type: 'y' }
         };
 
-        const contractData = {
+        const scatterData = {
             costRisk_costBenefit: [
-                { name: 'T&M', x: 2, y: 4, color: '#3b82f6' },
-                { name: 'T&M W/NTE', x: 4, y: 5, color: '#8b5cf6' },
+                { name: 'T&M', x: 2, y: 4, color: '#0066cc' },
+                { name: 'T&M W/NTE', x: 4, y: 5, color: '#6366f1' },
                 { name: 'GMP', x: 6, y: 7, color: '#f59e0b' },
-                { name: 'FFP', x: 9, y: 8, color: '#ef4444' }
+                { name: 'FFP', x: 9, y: 8, color: '#dc2626' }
             ],
             scheduleRisk_scheduleBenefit: [
-                { name: 'T&M', x: 2, y: 8, color: '#3b82f6' },
-                { name: 'T&M W/NTE', x: 4, y: 6, color: '#8b5cf6' },
+                { name: 'T&M', x: 2, y: 8, color: '#0066cc' },
+                { name: 'T&M W/NTE', x: 4, y: 6, color: '#6366f1' },
                 { name: 'GMP', x: 7, y: 4, color: '#f59e0b' },
-                { name: 'FFP', x: 9, y: 2, color: '#ef4444' }
+                { name: 'FFP', x: 9, y: 2, color: '#dc2626' }
             ],
             clientCostExposure_clientCostControl: [
-                { name: 'T&M', x: 9, y: 2, color: '#3b82f6' },
-                { name: 'T&M W/NTE', x: 6, y: 5, color: '#8b5cf6' },
+                { name: 'T&M', x: 9, y: 2, color: '#0066cc' },
+                { name: 'T&M W/NTE', x: 6, y: 5, color: '#6366f1' },
                 { name: 'GMP', x: 4, y: 7, color: '#f59e0b' },
-                { name: 'FFP', x: 1, y: 9, color: '#ef4444' }
+                { name: 'FFP', x: 1, y: 9, color: '#dc2626' }
             ],
             changeOrderComplexity_scheduleBenefit: [
-                { name: 'T&M', x: 1, y: 8, color: '#3b82f6' },
-                { name: 'T&M W/NTE', x: 3, y: 6, color: '#8b5cf6' },
+                { name: 'T&M', x: 1, y: 8, color: '#0066cc' },
+                { name: 'T&M W/NTE', x: 3, y: 6, color: '#6366f1' },
                 { name: 'GMP', x: 5, y: 4, color: '#f59e0b' },
-                { name: 'FFP', x: 8, y: 2, color: '#ef4444' }
+                { name: 'FFP', x: 8, y: 2, color: '#dc2626' }
             ],
             scheduleRisk_clientScheduleEnforcement: [
-                { name: 'T&M', x: 2, y: 2, color: '#3b82f6' },
-                { name: 'T&M W/NTE', x: 4, y: 4, color: '#8b5cf6' },
+                { name: 'T&M', x: 2, y: 2, color: '#0066cc' },
+                { name: 'T&M W/NTE', x: 4, y: 4, color: '#6366f1' },
                 { name: 'GMP', x: 7, y: 7, color: '#f59e0b' },
-                { name: 'FFP', x: 9, y: 9, color: '#ef4444' }
+                { name: 'FFP', x: 9, y: 9, color: '#dc2626' }
             ],
             costRisk_clientCostControl: [
-                { name: 'T&M', x: 2, y: 2, color: '#3b82f6' },
-                { name: 'T&M W/NTE', x: 4, y: 5, color: '#8b5cf6' },
+                { name: 'T&M', x: 2, y: 2, color: '#0066cc' },
+                { name: 'T&M W/NTE', x: 4, y: 5, color: '#6366f1' },
                 { name: 'GMP', x: 6, y: 7, color: '#f59e0b' },
-                { name: 'FFP', x: 9, y: 9, color: '#ef4444' }
+                { name: 'FFP', x: 9, y: 9, color: '#dc2626' }
             ],
             projectDefinitionReadiness_costBenefit: [
-                { name: 'T&M', x: 2, y: 4, color: '#3b82f6' },
-                { name: 'T&M W/NTE', x: 4, y: 5, color: '#8b5cf6' },
+                { name: 'T&M', x: 2, y: 4, color: '#0066cc' },
+                { name: 'T&M W/NTE', x: 4, y: 5, color: '#6366f1' },
                 { name: 'GMP', x: 7, y: 7, color: '#f59e0b' },
-                { name: 'FFP', x: 9, y: 8, color: '#ef4444' }
+                { name: 'FFP', x: 9, y: 8, color: '#dc2626' }
             ],
             projectDefinitionReadiness_scheduleBenefit: [
-                { name: 'T&M', x: 2, y: 8, color: '#3b82f6' },
-                { name: 'T&M W/NTE', x: 4, y: 6, color: '#8b5cf6' },
+                { name: 'T&M', x: 2, y: 8, color: '#0066cc' },
+                { name: 'T&M W/NTE', x: 4, y: 6, color: '#6366f1' },
                 { name: 'GMP', x: 7, y: 4, color: '#f59e0b' },
-                { name: 'FFP', x: 9, y: 2, color: '#ef4444' }
+                { name: 'FFP', x: 9, y: 2, color: '#dc2626' }
             ],
             projectDefinitionReadiness_clientCostControl: [
-                { name: 'T&M', x: 2, y: 2, color: '#3b82f6' },
-                { name: 'T&M W/NTE', x: 4, y: 5, color: '#8b5cf6' },
+                { name: 'T&M', x: 2, y: 2, color: '#0066cc' },
+                { name: 'T&M W/NTE', x: 4, y: 5, color: '#6366f1' },
                 { name: 'GMP', x: 7, y: 7, color: '#f59e0b' },
-                { name: 'FFP', x: 9, y: 9, color: '#ef4444' }
+                { name: 'FFP', x: 9, y: 9, color: '#dc2626' }
             ],
             projectDefinitionReadiness_clientScheduleEnforcement: [
-                { name: 'T&M', x: 2, y: 2, color: '#3b82f6' },
-                { name: 'T&M W/NTE', x: 4, y: 4, color: '#8b5cf6' },
+                { name: 'T&M', x: 2, y: 2, color: '#0066cc' },
+                { name: 'T&M W/NTE', x: 4, y: 4, color: '#6366f1' },
                 { name: 'GMP', x: 7, y: 7, color: '#f59e0b' },
-                { name: 'FFP', x: 9, y: 9, color: '#ef4444' }
+                { name: 'FFP', x: 9, y: 9, color: '#dc2626' }
             ],
             costRisk_contractorAutonomy: [
-                { name: 'T&M', x: 2, y: 2, color: '#3b82f6' },
-                { name: 'T&M W/NTE', x: 4, y: 4, color: '#8b5cf6' },
+                { name: 'T&M', x: 2, y: 2, color: '#0066cc' },
+                { name: 'T&M W/NTE', x: 4, y: 4, color: '#6366f1' },
                 { name: 'GMP', x: 6, y: 7, color: '#f59e0b' },
-                { name: 'FFP', x: 9, y: 9, color: '#ef4444' }
+                { name: 'FFP', x: 9, y: 9, color: '#dc2626' }
             ],
             scheduleRisk_contractorAutonomy: [
-                { name: 'T&M', x: 2, y: 2, color: '#3b82f6' },
-                { name: 'T&M W/NTE', x: 4, y: 4, color: '#8b5cf6' },
+                { name: 'T&M', x: 2, y: 2, color: '#0066cc' },
+                { name: 'T&M W/NTE', x: 4, y: 4, color: '#6366f1' },
                 { name: 'GMP', x: 7, y: 7, color: '#f59e0b' },
-                { name: 'FFP', x: 9, y: 9, color: '#ef4444' }
+                { name: 'FFP', x: 9, y: 9, color: '#dc2626' }
             ],
             clientCostExposure_contractorAutonomy: [
-                { name: 'T&M', x: 9, y: 2, color: '#3b82f6' },
-                { name: 'T&M W/NTE', x: 6, y: 4, color: '#8b5cf6' },
+                { name: 'T&M', x: 9, y: 2, color: '#0066cc' },
+                { name: 'T&M W/NTE', x: 6, y: 4, color: '#6366f1' },
                 { name: 'GMP', x: 4, y: 7, color: '#f59e0b' },
-                { name: 'FFP', x: 1, y: 9, color: '#ef4444' }
+                { name: 'FFP', x: 1, y: 9, color: '#dc2626' }
             ],
             changeOrderComplexity_contractorAutonomy: [
-                { name: 'T&M', x: 1, y: 2, color: '#3b82f6' },
-                { name: 'T&M W/NTE', x: 3, y: 4, color: '#8b5cf6' },
+                { name: 'T&M', x: 1, y: 2, color: '#0066cc' },
+                { name: 'T&M W/NTE', x: 3, y: 4, color: '#6366f1' },
                 { name: 'GMP', x: 5, y: 7, color: '#f59e0b' },
-                { name: 'FFP', x: 8, y: 9, color: '#ef4444' }
+                { name: 'FFP', x: 8, y: 9, color: '#dc2626' }
             ],
             projectDefinitionReadiness_contractorAutonomy: [
-                { name: 'T&M', x: 2, y: 2, color: '#3b82f6' },
-                { name: 'T&M W/NTE', x: 4, y: 4, color: '#8b5cf6' },
+                { name: 'T&M', x: 2, y: 2, color: '#0066cc' },
+                { name: 'T&M W/NTE', x: 4, y: 4, color: '#6366f1' },
                 { name: 'GMP', x: 7, y: 7, color: '#f59e0b' },
-                { name: 'FFP', x: 9, y: 9, color: '#ef4444' }
+                { name: 'FFP', x: 9, y: 9, color: '#dc2626' }
             ]
         };
 
-        let currentXMetric = 'costRisk';
-        let currentYMetric = 'costBenefit';
-        let chart;
+        let currentScatterX = 'costRisk';
+        let currentScatterY = 'costBenefit';
+        let scatterChart;
 
-        function createButtons() {
-            const xButtonsContainer = document.getElementById('xButtons');
-            const yButtonsContainer = document.getElementById('yButtons');
+        function createScatterButtons() {
+            const xContainer = document.getElementById('xButtons');
+            const yContainer = document.getElementById('yButtons');
 
-            Object.entries(metrics).forEach(([key, value]) => {
+            Object.entries(scatterMetrics).forEach(([key, value]) => {
                 const button = document.createElement('button');
                 button.className = 'metric-btn';
                 button.textContent = value.label;
                 
                 if (value.type === 'x') {
                     button.onclick = () => {
-                        currentXMetric = key;
-                        updateChart();
-                        updateButtonStates();
+                        currentScatterX = key;
+                        updateScatterChart();
+                        updateScatterButtons();
                     };
-                    xButtonsContainer.appendChild(button);
+                    xContainer.appendChild(button);
                 } else {
                     button.onclick = () => {
-                        currentYMetric = key;
-                        updateChart();
-                        updateButtonStates();
+                        currentScatterY = key;
+                        updateScatterChart();
+                        updateScatterButtons();
                     };
-                    yButtonsContainer.appendChild(button);
+                    yContainer.appendChild(button);
                 }
             });
 
-            updateButtonStates();
+            updateScatterButtons();
         }
 
-        function updateButtonStates() {
-            document.querySelectorAll('.metric-btn').forEach(btn => {
+        function updateScatterButtons() {
+            document.querySelectorAll('#xButtons .metric-btn, #yButtons .metric-btn').forEach(btn => {
                 btn.classList.remove('active-x', 'active-y');
             });
 
             const xButtons = document.getElementById('xButtons').querySelectorAll('.metric-btn');
             const yButtons = document.getElementById('yButtons').querySelectorAll('.metric-btn');
 
-            const xIndex = Object.keys(metrics).filter(k => metrics[k].type === 'x').indexOf(currentXMetric);
-            const yIndex = Object.keys(metrics).filter(k => metrics[k].type === 'y').indexOf(currentYMetric);
+            const xIndex = Object.keys(scatterMetrics).filter(k => scatterMetrics[k].type === 'x').indexOf(currentScatterX);
+            const yIndex = Object.keys(scatterMetrics).filter(k => scatterMetrics[k].type === 'y').indexOf(currentScatterY);
 
             if (xButtons[xIndex]) xButtons[xIndex].classList.add('active-x');
             if (yButtons[yIndex]) yButtons[yIndex].classList.add('active-y');
 
-            document.getElementById('xDesc').textContent = metrics[currentXMetric].description;
-            document.getElementById('yDesc').textContent = metrics[currentYMetric].description;
+            document.getElementById('xDesc').textContent = scatterMetrics[currentScatterX].description;
+            document.getElementById('yDesc').textContent = scatterMetrics[currentScatterY].description;
         }
 
-        function updateChart() {
-            const key = `${currentXMetric}_${currentYMetric}`;
-            const data = contractData[key] || contractData.costRisk_costBenefit;
+        function updateScatterChart() {
+            const key = `${currentScatterX}_${currentScatterY}`;
+            const data = scatterData[key] || scatterData.costRisk_costBenefit;
 
-            document.getElementById('chartTitle').textContent = 
-                `${metrics[currentXMetric].label} vs ${metrics[currentYMetric].label}`;
+            document.getElementById('scatterTitle').textContent = 
+                `${scatterMetrics[currentScatterX].label} vs ${scatterMetrics[currentScatterY].label}`;
 
             const chartData = {
                 datasets: data.map(point => ({
@@ -447,8 +1411,8 @@
                     backgroundColor: point.color,
                     borderColor: '#ffffff',
                     borderWidth: 2,
-                    pointRadius: 8,
-                    pointHoverRadius: 10
+                    pointRadius: 10,
+                    pointHoverRadius: 12
                 }))
             };
 
@@ -459,22 +1423,22 @@
                     responsive: true,
                     maintainAspectRatio: true,
                     plugins: {
-                        legend: {
-                            display: false
-                        },
+                        legend: { display: false },
                         tooltip: {
-                            backgroundColor: 'rgba(255, 255, 255, 0.95)',
-                            titleColor: '#1e293b',
-                            bodyColor: '#475569',
-                            borderColor: '#cbd5e1',
-                            borderWidth: 2,
-                            padding: 12,
+                            backgroundColor: 'rgba(255, 255, 255, 0.98)',
+                            titleColor: '#1a252f',
+                            bodyColor: '#2c3e50',
+                            borderColor: '#cbd5e0',
+                            borderWidth: 1,
+                            padding: 14,
                             displayColors: false,
+                            titleFont: { size: 14, weight: 'bold' },
+                            bodyFont: { size: 13 },
                             callbacks: {
                                 title: (context) => context[0].dataset.label,
                                 label: (context) => [
-                                    `${metrics[currentXMetric].label}: ${context.parsed.x}`,
-                                    `${metrics[currentYMetric].label}: ${context.parsed.y}`
+                                    `${scatterMetrics[currentScatterX].label}: ${context.parsed.x}`,
+                                    `${scatterMetrics[currentScatterY].label}: ${context.parsed.y}`
                                 ]
                             }
                         }
@@ -483,57 +1447,215 @@
                         x: {
                             min: 0,
                             max: 10,
-                            ticks: {
-                                stepSize: 2,
-                                color: '#475569'
-                            },
+                            ticks: { stepSize: 2, color: '#5a6c7d', font: { size: 12 } },
                             title: {
                                 display: true,
-                                text: metrics[currentXMetric].label + ' (Higher = More Risk)',
-                                color: '#1e293b',
-                                font: {
-                                    weight: 'bold',
-                                    size: 13
-                                }
+                                text: scatterMetrics[currentScatterX].label,
+                                color: '#1a252f',
+                                font: { weight: 'bold', size: 13 }
                             },
-                            grid: {
-                                color: '#e0e0e0'
-                            }
+                            grid: { color: '#e5e7eb' }
                         },
                         y: {
                             min: 0,
                             max: 10,
-                            ticks: {
-                                stepSize: 2,
-                                color: '#475569'
-                            },
+                            ticks: { stepSize: 2, color: '#5a6c7d', font: { size: 12 } },
                             title: {
                                 display: true,
-                                text: metrics[currentYMetric].label + ' (Higher = More Benefit)',
-                                color: '#1e293b',
-                                font: {
-                                    weight: 'bold',
-                                    size: 13
-                                }
+                                text: scatterMetrics[currentScatterY].label,
+                                color: '#1a252f',
+                                font: { weight: 'bold', size: 13 }
                             },
-                            grid: {
-                                color: '#e0e0e0'
-                            }
+                            grid: { color: '#e5e7eb' }
                         }
                     }
                 }
             };
 
-            if (chart) {
-                chart.destroy();
-            }
-
+            if (scatterChart) scatterChart.destroy();
             const ctx = document.getElementById('scatterChart').getContext('2d');
-            chart = new Chart(ctx, config);
+            scatterChart = new Chart(ctx, config);
         }
 
-        createButtons();
-        updateChart();
+        // ============================================
+        // BAR CHART
+        // ============================================
+
+        const barMetrics = {
+            costCertainty: {
+                title: 'Cost Certainty Analysis',
+                description: 'Higher values indicate greater cost predictability and reduced budget risk',
+                data: [
+                    { name: 'FFP', client: 95, contractor: 85 },
+                    { name: 'GMP', client: 80, contractor: 60 },
+                    { name: 'T&M W/NTE', client: 65, contractor: 45 },
+                    { name: 'T&M', client: 20, contractor: 15 }
+                ]
+            },
+            scheduleEnforceability: {
+                title: 'Schedule Enforceability Assessment',
+                description: 'Higher values indicate stricter schedule requirements and greater contractor accountability',
+                data: [
+                    { name: 'FFP', client: 90, contractor: 90 },
+                    { name: 'GMP', client: 70, contractor: 70 },
+                    { name: 'T&M W/NTE', client: 40, contractor: 40 },
+                    { name: 'T&M', client: 20, contractor: 20 }
+                ]
+            },
+            projectDefinitionReadiness: {
+                title: 'Project Definition Readiness Requirements',
+                description: 'Higher values indicate greater project maturity required (design completion, scope definition, stakeholder confidence)',
+                data: [
+                    { name: 'FFP', client: 90, contractor: 90 },
+                    { name: 'GMP', client: 70, contractor: 70 },
+                    { name: 'T&M W/NTE', client: 40, contractor: 40 },
+                    { name: 'T&M', client: 20, contractor: 20 }
+                ]
+            },
+            contractorAutonomy: {
+                title: 'Execution Control Distribution',
+                description: 'Comparative analysis of contractor autonomy versus client control over means, methods, and sequencing',
+                data: [
+                    { name: 'FFP', client: 10, contractor: 90 },
+                    { name: 'GMP', client: 30, contractor: 70 },
+                    { name: 'T&M W/NTE', client: 60, contractor: 40 },
+                    { name: 'T&M', client: 85, contractor: 15 }
+                ]
+            }
+        };
+
+        let currentBarMetric = 'costCertainty';
+        let barChart;
+
+        function createBarButtons() {
+            const container = document.getElementById('barButtons');
+            
+            Object.keys(barMetrics).forEach(key => {
+                const button = document.createElement('button');
+                button.className = 'metric-btn';
+                button.textContent = barMetrics[key].title;
+                button.onclick = () => {
+                    currentBarMetric = key;
+                    updateBarChart();
+                    updateBarButtons();
+                };
+                container.appendChild(button);
+            });
+
+            updateBarButtons();
+        }
+
+        function updateBarButtons() {
+            const buttons = document.querySelectorAll('#barButtons .metric-btn');
+            buttons.forEach((btn, index) => {
+                const metricKey = Object.keys(barMetrics)[index];
+                if (metricKey === currentBarMetric) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
+
+            document.getElementById('barMetricTitle').textContent = barMetrics[currentBarMetric].title;
+            document.getElementById('barMetricDescription').textContent = barMetrics[currentBarMetric].description;
+        }
+
+        function updateBarChart() {
+            const data = barMetrics[currentBarMetric].data;
+
+            const chartData = {
+                labels: data.map(d => d.name),
+                datasets: [
+                    {
+                        label: currentBarMetric === 'contractorAutonomy' ? 'Client Control' : 
+                               currentBarMetric === 'projectDefinitionReadiness' ? 'Requirement Level' : 
+                               'Client Risk/Certainty',
+                        data: data.map(d => d.client),
+                        backgroundColor: '#0066cc',
+                        borderRadius: 4,
+                        borderSkipped: false
+                    },
+                    {
+                        label: currentBarMetric === 'contractorAutonomy' ? 'Contractor Autonomy' : 
+                               currentBarMetric === 'projectDefinitionReadiness' ? 'Requirement Level' : 
+                               'Contractor Risk/Certainty',
+                        data: data.map(d => d.contractor),
+                        backgroundColor: '#2c3e50',
+                        borderRadius: 4,
+                        borderSkipped: false
+                    }
+                ]
+            };
+
+            const config = {
+                type: 'bar',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: true,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top',
+                            labels: {
+                                padding: 20,
+                                font: { size: 13, weight: '600' },
+                                usePointStyle: true,
+                                pointStyle: 'rect'
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(255, 255, 255, 0.98)',
+                            titleColor: '#1a252f',
+                            bodyColor: '#2c3e50',
+                            borderColor: '#cbd5e0',
+                            borderWidth: 1,
+                            padding: 12,
+                            displayColors: true
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: { color: '#5a6c7d', font: { weight: '600', size: 12 } },
+                            grid: { display: false }
+                        },
+                        y: {
+                            min: 0,
+                            max: 100,
+                            ticks: { stepSize: 20, color: '#5a6c7d' },
+                            title: {
+                                display: true,
+                                text: 'Assessment Value (0-100 Scale)',
+                                color: '#1a252f',
+                                font: { weight: '600', size: 13 }
+                            },
+                            grid: { color: '#e5e7eb' }
+                        }
+                    }
+                }
+            };
+
+            if (barChart) barChart.destroy();
+            const ctx = document.getElementById('barChart').getContext('2d');
+            barChart = new Chart(ctx, config);
+        }
+
+        // Initialize both charts
+        createScatterButtons();
+        updateScatterChart();
+        createBarButtons();
+        updateBarChart();
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('nav a').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
     </script>
 </body>
 </html>
